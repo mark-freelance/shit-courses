@@ -1,0 +1,50 @@
+<!-- miniprogram/pages/kecheng/index/index.wxml -->
+<view class="container">
+  <view class="top">
+    <image class="poster-image" src="cloud://cloud1-0gycvki2e3212ab3.636c-cloud1-0gycvki2e3212ab3-1305395037/3. WechatIMG3115-拍星的人-logo.jpg" mode="widthFix"></image>
+  </view>
+  <!-- <view class="menu">
+    <view class="mA">
+      <image class="m-image" src="../../../images/k-4.png" mode="aspectFit" bindtap="toweidian"></image>
+      <text>连线商城</text>
+    </view>
+    <view class="mA">
+      <image class="m-image" src="../../../images/h1.png" mode="aspectFit" bindtap="toteacher"></image>
+      <text>往期活动</text>
+    </view>  
+    <view class="mA">
+      <image class="m-image" src="../../../images/h2.png" mode="aspectFit" bindtap="tostudent"></image>
+      <text>近期活动</text>
+    </view>
+    <view class="mA">
+      <image class="m-image" src="../../../images/k-1.png" mode="aspectFit" bindtap="tous"></image>
+      <text>组织简介</text>
+    </view>
+  </view> -->
+  <view class="header" style="padding-bottom:15rpx;">
+    <view class="header-text">本课程由天文奥林匹克竞赛国际赛金银牌选手研发。</view>
+    <view class="header-text">本套课程适用于对天文知识有一定了解的中小学生。</view>
+    <view class="header-text">课程共有13个模块，每个模块6-12节。</view>
+    <view class="header-text">可以在课程讨论区提问，老师会回复相关问题。</view>
+  </view>
+  <view class="mid-title">
+    <text class="mulu">天文高阶课程目录</text>
+  </view>
+  <view class="mid">
+    <view class="article" wx:key="_id" wx:for="{{modules}}">
+      <view class="kecheng-info" style="background:{{item.bg_color}};" bindtap="tomodule" data-mid="{{item._id}}" wx:if="{{item.if_ok}}">
+        <view class="kecheng-title">{{item.module_name}}</view>
+        <mp-badge wx:if="{{item.if_new}}" style="margin-left: 15rpx;" content="new" ext-class="blue" />
+        <!-- <view class="kecheng-desc" bindtap="tomodule" data-mid="{{item._id}}">{{item.module_desc}}</view>
+          
+          <view class="banner">
+            <view bindtap="tomodule" class="towatch" data-mid="{{item._id}}">点击学习</view>
+            <view bindtap="toshuati" class="towatch" data-mid="{{item._id}}">知识检测</view>
+          </view> -->
+      </view>
+      <view class="kecheng-info" style="background:{{item.bg_color}};opacity:0.45;" wx:else>
+        <view class="kecheng-title" data-mid="{{item._id}}">{{item.module_name}}</view>
+      </view>
+    </view>
+  </view>
+</view>

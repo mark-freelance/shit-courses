@@ -1,0 +1,64 @@
+<!-- miniprogram/pages/tianwen/result/result.wxml -->
+<view class="page">
+    <image class="background" src="./bg.jpg" mode="scaleToFill"></image>
+    <view class="icon">
+        <text>得分/总分:</text>
+        <text class="tex" style="padding-left:10px">{{ all_garde - grade }}/{{all_garde}}</text>
+        <view class="fenxi">错题集中在:</view>
+        <view>
+            <text>{{toptypes[0].type}};</text>
+            <text>{{toptypes[1].type}};</text>
+            <text>{{toptypes[2].type}}.</text>
+        </view>
+    </view>
+    <view class="header">
+        <text class="cuotifenxi">错题分析</text>
+    </view>
+    <view class="tipss">点击题目添加至错题本</view>
+    <view class="contents">
+        <view class="wrong-list" wx:key="_id" wx:for="{{wrong_array}}">
+            <view bindtap="tocuotiben" data-q="{{item}}">
+                <view>{{item.question_text}}</view>
+                <view>【题目类型:  {{item.question_class}}】</view>
+                <view wx:key="_id" wx:for="{{item.question_options}}" wx:for-index="idx" wx:for-item="itemName" class="options">
+                    <view wx:if="{{!item.is_fill}}">
+                        <view wx:if="{{itemName.checked == true}}" class="wrong-answer">
+                            {{itemName.option}}.  {{itemName.text}}
+                        </view>
+                        <view wx:else="{{itemName.checked == false}}" class="rights">
+                            <view wx:if="{{itemName.option == item.question_answer}}" class="right-answer">
+                                {{itemName.option}}.  {{itemName.text}}
+                            </view>
+                            <view wx:else class="other">
+                                {{itemName.option}}. {{itemName.text}}
+                            </view>
+                        </view>
+                    </view>
+                    <view wx:if="{{item.is_fill}}">
+                        <view class="fillcf">
+                            <view>{{itemName.option}}.</view>
+                            <view style="width:30px;background:#07c160;padding-left:5px;padding-right:5px;">
+                                {{itemName.text}}
+                            </view>
+                            <view style="width:30px;background:#FA8072;margin-left:35px;padding-left:5px;padding-right:5px">
+                                {{itemName.fill}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="download" hidden="{{!item.download}}">
+                <view style="width:80%"></view>
+                <view class="down-png">
+                    <image src="./download.png" style="width:25px;height:25px"></image>
+                </view>
+            </view>
+            <view style="margin-top:40rpx;">
+                <image class="jiexi" style="width:100%;" wx:if="{{item.jiexi}}" src="{{item.jiexi}}" mode="widthFix"></image>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="kecheng-price">
+    <view class="buy-or-play" bindtap="tobuy">去学习对应课程知识吧</view>
+</view>

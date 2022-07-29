@@ -1,0 +1,88 @@
+<!-- index.wxml -->
+<view class="container">
+  <!-- 用户 openid -->
+  <view class="userinfo">
+    <button class="userinfo-avatar" style="background-image: url({{user.avatarUrl}})" size="default"></button>
+    <view class="uploader-text">
+      <text>{{user.nickName}}</text>
+    </view>
+    <view class="userinfo-nickname-wrapper">
+      <view wx:if="{{logged==false}}">
+        <button class="userinfo-nickname" bindtap="getUserProfile">点击登陆</button>
+      </view>
+      <view wx:else>已授权</view>
+    </view>
+  </view>
+  <!-- 答题记录 -->
+  <view class="uploader">
+    <navigator url="../cuotiben/cuotiben" open-type="navigate" class="uploader-text">
+      <image style="width:25px;height:25px;padding-top:13px" src="./1.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px">错题本</view>
+    </navigator>
+  </view>
+  <!-- 意见反馈 -->
+  <view class="uploader">
+    <navigator url="../xiaoxi/xiaoxi" open-type="navigate" class="uploader-text">
+      <image style="width:25px;height:25px;padding-top:13px" src="./2.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px">讨论区回复</view>
+      <view wx:if="{{showCommentDot}}">
+        <image style="width:8px;height:8px;margin-left:2px;margin-bottom:7px;" src="./dot.png" mode="aspectFit"></image>
+      </view>
+    </navigator>
+  </view>
+  <!-- 意见反馈 -->
+  <view class="uploader" wx:if="{{true}}">
+    <navigator url="../saved/saved" open-type="navigate" class="uploader-text">
+      <image style="width:25px;height:25px;padding-top:13px" src="./4.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px">活动收藏</view>
+    </navigator>
+  </view>
+  <view class="uploader" wx:if="{{canShowBuy}}">
+    <navigator url="../bags/bags" open-type="navigate" class="uploader-text">
+      <image style="width:25px;height:25px;padding-top:13px" src="./4.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px">已购课程</view>
+    </navigator>
+  </view>
+  <view class="uploader" wx:if="{{true}}">
+    <navigator url="../activity/activity" open-type="navigate" class="uploader-text">
+      <image style="width:25px;height:25px;padding-top:13px" src="./4.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px">已购活动</view>
+    </navigator>
+  </view>
+  <!-- 个人信息
+  <view class="uploader" wx:if="{{canShowBuy}}">
+    <navigator url="../fapiao/fapiao" open-type="navigate" class="uploader-text">
+      <image style="width:25px;height:25px;padding-top:13px" src="./4.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px">申请开票</view>
+    </navigator>
+  </view> -->
+  <!-- 个人信息 -->
+  <view class="uploader" wx:if="{{canShowBuy}}">
+    <view bindtap="tobuy" open-type="navigate" class="uploader-text">
+      <image style="width:25px;height:25px;padding-top:13px" src="./5.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px">学校账号购买</view>
+    </view>
+  </view>
+  <view class="uploader">
+    <view bindtap="school" open-type="navigate" class="uploader-text">
+      <image style="width:25px;height:25px;padding-top:13px" src="./6.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px" wx:if="{{canShowBuy}}">学校账号登录</view>
+      <view style="margin-left:20px;margin-bottom:5px" wx:else>账号登录</view>
+    </view>
+  </view>
+  <!-- <view class="uploader" wx:if="{{true}}">
+    <navigator url="../bind/bind" open-type="navigate" class="uploader-text">
+      <image style="width:25px;height:25px;padding-top:13px" src="./4.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px">绑定电话或邮箱</view>
+    </navigator>
+  </view>
+   <view class="uploader">
+    <view bindtap="toadmin" open-type="navigate" class="uploader-text">
+      <image style="width:25px;height:25px;padding-top:13px"  src="./6.jpg" mode="aspectFit"></image>
+        <view style="margin-left:20px;margin-bottom:5px">老师模块</view>
+    </view>
+  </view> -->
+  <view class="buy-tip" style="margin-top:30px">
+    <text user-select="true" class="buy-tip-text">合作/疑问/加入我们，请联系 shijingsi@astroedu.link</text>
+  </view>
+</view>

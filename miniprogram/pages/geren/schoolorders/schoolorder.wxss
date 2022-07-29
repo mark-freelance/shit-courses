@@ -1,0 +1,14 @@
+/* miniprogram/pages/geren/schoolorders/schoolorder.wxss */
+
+.items{
+  flex-direction: row;
+  display: flex;
+  margin-top: 10px;
+  font-size: small;
+}
+
+.page{
+  width: 95%;
+  margin: 20px auto;
+  color: #565e73;
+}

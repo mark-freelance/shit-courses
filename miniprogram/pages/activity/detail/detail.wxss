@@ -1,0 +1,424 @@
+/* pages/activity/detail.wxss */
+/* miniprogram/pages/kecheng/us/us.wxss */
+.swiper-item {
+  width: 100%;
+}
+.swiper-image {
+  width: 100%;
+  height: 300rpx;
+}
+.activities {
+  margin-top: 50rpx;
+  color: #565e73;
+}
+.activity-item {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30rpx;
+}
+
+.acitivity-icon {
+  margin-left: 30rpx;
+  box-shadow: 8rpx 8rpx 8rpx rgba(0, 0, 0, 0.35);
+  border-radius: 25rpx;
+  width: 160rpx;
+  height: 160rpx;
+}
+.acitivity-info {
+  font-size: small;
+  margin-left: 16rpx;
+  width: 500rpx;
+}
+.line {
+  display: block;
+  margin-top: 20rpx;
+  width: 100%;
+  height: 22rpx;
+  background-color: #f6f6f6;
+}
+.action {
+  display: flex;
+  flex-direction: row;
+}
+.fixed_bottom {
+  position: fixed;
+  bottom: 20rpx;
+}
+.action_button {
+  background-color: #aac8e2;
+  color: #fff;
+  border-radius: 16rpx;
+  width: 90rpx;
+  height: 50rpx;
+  text-align: center;
+  font-size: small;
+  padding-top: 12rpx;
+}
+
+.login {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background-color: #888888;
+  opacity: 0.5;
+}
+
+.page {
+  width: 100%;
+  background-color: #fff;
+  color: #565e73;
+}
+
+.kecheng-video {
+  width: 100%;
+}
+
+.play-video {
+  width: 100%;
+}
+
+.kecheng-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.kecheng-title {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+  padding-left: 10px;
+  font-size: small;
+  font-weight: normal;
+  text-align: left;
+}
+
+.kecheng-desc {
+  padding-left: 10px;
+  font-size: small;
+  font-weight: normal;
+  text-align: left;
+  padding-top: 0px;
+}
+
+.towatch {
+  text-align: center;
+  background-color: #fe7700;
+  color: #fff;
+  border-radius: 10px;
+  margin-left: 10px;
+  width: 80%;
+}
+
+.comment1 {
+  width: 100%;
+  margin-top: 15px;
+  text-align: center;
+  border-radius: 0px;
+  flex-direction: row;
+  display: flex;
+  background-color: #fff;
+}
+
+.kecheng-info {
+  width: 80%;
+  font-size: small;
+}
+
+.tabclass {
+  width: 100%;
+  background-color: white;
+}
+.tab-bar-title__selected {
+  font-weight: bold;
+  border-bottom-color: #4186bd !important;
+  color: #565e73 !important;
+  background: white !important;
+}
+.header {
+  padding-top: 7px;
+  margin-bottom: 9px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background: #fff;
+  height: 35px;
+}
+.jump {
+  width: 50%;
+  text-align: center;
+  margin: 0px auto;
+  color: #4186bd;
+}
+.weui-tabs-swiper {
+  height: calc(100vh - 720rpx) !important;
+  overflow-y: auto !important;
+  background: #fff;
+}
+
+.kecheng-comment {
+  bottom: 100rpx;
+  position: fixed;
+  top: 1px;
+  background: #fff;
+}
+
+.kecheng-comment2 {
+  bottom: 20rpx;
+  position: fixed;
+  top: 1px;
+  background: #fff;
+  width: 100%;
+}
+.kecheng-price {
+  position: fixed;
+  bottom: 25px;
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  background: #fff;
+  height: 50px;
+}
+.price {
+  width: 40%;
+  text-align: center;
+  font-weight: bold;
+  font-size: larger;
+  padding: auto 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.buy-or-play {
+  background: #4186bd;
+  width: 35%;
+  color: #fff;
+  border-radius: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: larger;
+  margin: 3px auto;
+  padding: 3px 1px;
+}
+
+.editor {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+}
+
+.input {
+  width: 80%;
+  height: 90%;
+}
+
+.mini-btn {
+  padding-left: 20px;
+  height: 30px;
+  margin: auto 5px;
+}
+
+.comment2-all {
+  margin-left: 10%;
+  text-align: center;
+  border-radius: 0px;
+  flex-direction: row;
+  display: flex;
+  background-color: #fff;
+}
+
+.all {
+  height: 600px;
+}
+
+.timeandlove {
+  display: flex;
+  flex-direction: row;
+  font-size: small;
+  padding-left: 10px;
+  width: 100%;
+}
+
+.love {
+  width: 10px;
+  margin-right: 2px;
+}
+
+.name {
+  width: 90%;
+  font-size: small;
+}
+
+.reply {
+  width: 15%;
+  color: gray;
+  font-size: small;
+  text-align: center;
+  padding-top: 4px;
+  padding-left: 10px;
+}
+
+.time {
+  width: 30%;
+  text-align: left;
+}
+
+.love_num {
+  width: 10%;
+  margin-left: 5px;
+  text-align: center;
+  padding-top: 3px;
+}
+
+.love-2 {
+  width: 10px;
+  margin-right: 2px;
+}
+.love_num-2 {
+  width: 10%;
+  margin-left: 5px;
+  text-align: center;
+  padding-top: 3px;
+}
+
+.container {
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.ql-container {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow: auto;
+  padding: 10px 10px 20px 10px;
+  border: 1px solid #ececec;
+}
+
+.ql-active {
+  color: #22c704;
+}
+
+.iconfont {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.toolbar {
+  box-sizing: border-box;
+  padding: 0 10px;
+  height: 50px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ececec;
+  border-left: none;
+  border-right: none;
+  background-color: #fff;
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.k_name {
+  width: 60%;
+  margin-left: 10px;
+  text-align: center;
+}
+.button {
+  width: 20%;
+  margin-right: 10px;
+}
+.lianxiti_image {
+  width: 100%;
+}
+
+.tab-content {
+  background: #fff;
+}
+
+.newinput {
+  width: 85%;
+  margin: 8px auto;
+  text-align: left;
+  font-size: 30rpx;
+  font-weight: normal;
+  background: rgba(213, 210, 217, 0.3);
+  border-radius: 12px;
+  color: #565e73;
+  padding-left: 17px;
+  line-height: 30px;
+  padding-top: 0px;
+  letter-spacing: 1px;
+}
+
+.title-all {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  background: #fff;
+  height: 40px;
+  margin-top: 1px;
+  font-size: 15px;
+  margin: 1px auto;
+  padding-top: 17px;
+}
+
+.ta1 {
+  width: 20%;
+  text-align: center;
+}
+
+.ta2 {
+  width: 45%;
+  text-align: center;
+}
+
+.timeindex-all {
+  width: 85%;
+  margin: 20px auto;
+  padding-bottom: 30px;
+  font-size: small;
+}
+
+.time-item {
+  margin-top: 10px;
+}
+.zhankai {
+  width: 30%;
+}
+
+.zhankai2 {
+  width: 25%;
+}
+
+.weui-tabs-bar__item {
+  width: 33%;
+  text-align: center;
+}

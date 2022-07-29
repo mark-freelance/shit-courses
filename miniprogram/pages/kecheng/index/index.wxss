@@ -1,0 +1,145 @@
+/* miniprogram/pages/kecheng/index/index.wxss */
+page{
+  background: #fff;
+}
+.sp{
+  margin: 10px auto;
+  width: 98%;
+  height: 200px;
+}
+.top{
+  width: 100%;
+}
+.poster-image{
+  width: 100%;
+  height: 200px;
+}
+
+.mid{
+  width: 90%;
+  margin: 11px auto;
+}
+.article{
+  width: 100%;
+  margin: 12px auto;
+  height: 25px;
+  border-radius: 10px;
+  color: #565e73;
+  /*background: rgba(80,74,86,0.2);*/
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.35);
+
+}
+.menu {
+  margin-top: 10px;
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+}
+.mA{
+  font-size: small;
+  width: 20%;
+  text-align: center;
+  box-shadow:  0 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background:#fff;
+  margin: 2px 3%;
+  padding-top: 10px;
+}
+
+.m-image{
+  width: 100%;
+  height: 40px;
+}
+.header{  
+  width: 90%;
+  margin: 10px auto;
+  text-align: left;
+  font-size: 27.7rpx;
+  font-weight: 320;
+  background: rgba(213,210,217,0.3);
+  border-radius: 12px;
+  color: #565e73;
+  padding-left: 13px;
+  line-height:27px;
+  padding-top: 5px;
+  letter-spacing:1px;
+  
+}
+
+
+.container{
+  font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
+}
+.kecheng-image{
+  width: 30%;
+  height: 120px;
+  padding-left: 10px;
+  padding-top:10px;
+  border-radius: 5px;
+}
+.kecheng-title{
+  font-size: 14.3px;
+  text-align: left;
+  padding-left: 13px;
+  color: #565e73;
+  padding-top: 3px;
+  }
+
+.kecheng-desc{
+  padding-top: 5px;
+  padding-left: 10px;
+  font-size: small;
+  font-weight: normal;
+  text-align: left;
+  padding-right: 10px;
+}
+.kecheng-info{
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  background: rgba(80,74,86,0.2);
+  border-radius: 10px;
+}
+
+.towatch{
+  text-align: center;
+  background-color: #FE7700;
+  color: #fff;
+  border-radius: 10px;
+  margin-left: 5%;
+  width: 40%;
+}
+
+.banner{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.mulu{
+  font-size: 22px;
+  color: #504a56;
+  border-bottom: #565e73 solid 4px;
+  letter-spacing:1.5px;
+  text-align: left;
+  width: auto;
+  padding-bottom: 7px;
+}
+.mid-title{
+  width: 90%;
+  text-align: left;
+  margin: 8px auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.blue{
+  background-color: #ea68a2;
+  height:32rpx;
+  width:60rpx;
+  font-size:32rpx;
+  line-height:32rpx;
+}
+

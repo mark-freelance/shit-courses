@@ -1,0 +1,172 @@
+<!-- miniprogram/pages/kecheng/kechengplay/kechengplay.wxml -->
+<view class="page">
+  <view class="kecheng-video">
+    <video class="play-video" src="{{kecheng.kecheng_dizhi}}" id="myVideo"></video>
+    <!-- <my-player appid="1305395037" fileid="8602268011094893216" playerid="first_player"></my-player> 
+    <yz_video app-id="wx9e5eba73bf23a27a" shop-id="16719442" sourceFrom="{{2}}" open-id="oDpvq0LNzwhMGfiNRbq-NthY5oUo" custom-url="https://b.yzcdn.cn/public_files/2019/03/20/b124ce1df4a4c0d0c6b2253481155bf6.mp4"></yz_video> -->
+  </view>
+  <view class="header">
+    <view class="jump" bindtap="tobefore">
+      <image src="./left.png" style="height:25px;width:25px;padding-top:3px;padding-left:50px"></image>
+    </view>
+    <view class="jump" bindtap="tonext">
+      <image src="./right.png" style="height:25px;width:25px;padding-top:3px;padding-right:50px"></image>
+    </view>
+  </view>
+  <mp-tabs tabs="{{tabs}}" activeTab="{{activeTab}}" swiperClass="weui-tabs-swiper" bindtabclick="onTabClick" bindchange="onChange" activeClass="tab-bar-title__selected" tab-class="tabclass">
+    <block wx:for="{{tabs}}" wx:key="title">
+      <view class="tab-content" slot="tab-content-{{index}}">
+        <view wx:if="{{index == 1&&watchType!==12}}">
+          <!-- <view class="title-all">
+          <view class="ta1">默认</view>
+          <view class="ta1">最新</view>
+          <view class="ta2">只看老师回复</view>
+          <switch style="zoom:0.7;margin-left:10px" color="#4186bd"></switch>
+        </view> -->
+          <scroll-view class="kecheng-comment" scroll-y="true" enable-flex="true" style="overflow:scroll;position:fixed;">
+            <view class="comment-all" wx:key="_id" wx:for="{{asks1}}" wx:for-index="indexs" wx:for-item="items">
+              <!-- 一级评论 -->
+              <view class="comment1" wx:if="{{!items.is_delete}}">
+                <image class="kecheng-image" src="{{items.userList[0].avatarUrl}}" mode="aspectFill"></image>
+                <view class="kecheng-info">
+                  <view class="kecheng-title">
+                    <view class="name">
+                      <text class="name_text">{{items.userList[0].nickName}}</text>
+                    </view>
+                  </view>
+                  <view class="kecheng-desc">
+                    <rich-text nodes="{{items.html}}"></rich-text>
+                  </view>
+                  <view class="timeandlove">
+                    <view class="time">{{items.create_time}}</view>
+                    <view class="zhankai">展开{{items.huifu}}条回复</view>
+                    <view class="reply" bindtap="toreply2" data-cid="{{items._id}}" data-name="{{items.userList[0].nickName}}" data-recv_uid="{{items.userList[0]._openid}}">
+                      <image src="./comment.png" style="width:16px;height:16px"></image>
+                    </view>
+                    <view class="love" bindtap="tolove" data-add="0" data-cid="{{items}}">
+                      <mp-icon icon="like" type="field" color="{{items.color}}" size="{{23}}"></mp-icon>
+                    </view>
+                    <view class="love_num">{{items.love}}</view>
+                    <view class="love" bindtap="toDelete" data-cid="{{items}}" wx:if="{{items._openid==userList[0]._openid}}">
+                      <mp-icon icon="delete" color="#4186bd" size="{{23}}"></mp-icon>
+                    </view>
+                    <!-- <view class="love" bindtap="" data-cid="{{items}}" wx:else>
+                      <mp-icon icon="star" color="#4186bd" size="{{23}}"></mp-icon>
+                    </view> -->
+                  </view>
+                </view>
+              </view>
+              <!-- 二级评论 -->
+              <view wx:for="{{asks2}}" wx:key="_id" class="comment2">
+                <view class="comment2-all" wx:if="{{item.ask1_id == items._id &&!items.is_delete&&!item.is_delete}}">
+                  <image class="kecheng-image" src="{{item.userList[0].avatarUrl}}" mode="aspectFill"></image>
+                  <view class="kecheng-info">
+                    <view class="kecheng-title">
+                      <view class="name">
+                        <text class="name_text">
+                          {{item.userList[0].nickName}} @ {{item.user_recv_name}}
+                        </text>
+                      </view>
+                    </view>
+                    <view class="kecheng-desc">
+                      <rich-text nodes="{{item.html}}"></rich-text>
+                    </view>
+                    <view class="timeandlove">
+                      <view class="time">{{item.create_time}}</view>
+                      <view class="zhankai2"></view>
+                      <view class="reply" bindtap="toreply2" data-cid="{{items._id}}" data-name="{{items.userList[0].nickName}}" data-recv_uid="{{items.userList[0]._openid}}">
+                        <image src="./comment.png" style="width:16px;height:16px"></image>
+                      </view>
+                      <view class="love-2" bindtap="tolove_2" data-add="0" data-cid="{{item}}">
+                        <mp-icon icon="like" type="field" color="{{item.color}}" size="{{23}}"></mp-icon>
+                      </view>
+                      <view class="love_num-2">{{item.love}}</view>
+                      <view class="love" bindtap="toDelete2" data-cid="{{item}}" wx:if="{{item._openid==userList[0]._openid}}">
+                        <mp-icon icon="delete" color="#4186bd" size="{{23}}"></mp-icon>
+                      </view>
+                      <!-- <view class="love" bindtap="" data-cid="{{item}}" wx:else>
+                        <mp-icon icon="star" color="#4186bd" size="{{23}}"></mp-icon>
+                      </view> -->
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view class="scrollSpase" style="height:20rpx;"></view>
+          </scroll-view>
+        </view>
+        <view wx:if="{{index == 2}}">
+          <scroll-view class="kecheng-comment2" scroll-y="true">
+            <view wx:key="_id" wx:for="{{kecheng.lianxiti_url}}">
+              <image bindtap="topreview" class="lianxiti_image" data-url="{{item.url}}" src="{{item.url}}" mode="widthFix"></image>
+            </view>
+            <view class="scrollSpase" style="height:20rpx;"></view>
+          </scroll-view>
+        </view>
+        <view wx:if="{{index == 0}}">
+          <scroll-view class="kecheng-comment2" scroll-y="true">
+            <view class="timeindex-all">
+              <view wx:key="_id" wx:for="{{kecheng.time_index}}" class="time-item">
+                <view class="time_index" bindtap="jumpvideo" data-time="{{item}}">
+                  ● {{item.text}}
+                </view>
+              </view>
+            </view>
+            <view class="scrollSpase" style="height:20rpx;"></view>
+          </scroll-view>
+        </view>
+      </view>
+    </block>
+  </mp-tabs>
+  <view class="kecheng-price">
+    <view class="newinput" bindtap="toask" wx-if="{{watchType!==12}}">
+      <view style="padding-top:2px">欢迎讨论✎</view>
+    </view>
+  </view>
+  <view class="editor" wx:if="{{pinglun}}">
+    <input class="input" placeholder="请输入内容" focus="true" maxlength="50" confirm-type="done" bindinput="bindinput" bindblur="losefocus"></input>
+    <button class="mini-btn" type="primary" size="mini" bindtap="submitcomment" disabled="{{cantsubmit}}">
+      发送
+    </button>
+  </view>
+  <view class="editor" wx:if="{{reply}}">
+    <input class="input" placeholder="请输入内容" focus="true" maxlength="50" confirm-type="done" bindinput="bindinput" bindblur="losefocus"></input>
+    <button class="mini-btn" type="primary" size="mini" bindtap="submitreply" disabled="{{cantsubmit}}">
+      回复
+    </button>
+  </view>
+</view>
+<mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+<!-- miniprogram/pages/kecheng/editor/editor.wxml -->
+<view class="container" style="height:{{editorHeight}}px;" wx:if="{{ask}}">
+  <view class="title">
+    <button class="button" type="warn" size="mini" bindtap="back">返回</button>
+    <view class="k_name">写留言</view>
+    <button class="button" type="primary" disabled="{{cantsubmit}}" size="mini" bindtap="getContent" wx:if="{{!reply2}}">
+      提交
+    </button>
+    <button class="button" type="primary" disabled="{{cantsubmit}}" size="mini" bindtap="getContent2" wx:if="{{reply2}}">
+      回复
+    </button>
+  </view>
+  <editor id="editor" class="ql-container" placeholder="{{placeholder}}" bindstatuschange="onStatusChange" bindready="onEditorReady" bindinput="bindinput"></editor>
+</view>
+<view class="toolbar" catchtouchend="format" hidden="{{false}}" style="bottom: {{isIOS ? keyboardHeight : 0}}px; height: {{toolBarHeight}}px; padding-bottom: {{isIOS ? safeHeight : 0}}px" wx:if="{{ask}}">
+  <i class="iconfont icon-charutupian" catchtouchend="insertImage"></i>
+  <i class="iconfont icon-format-header-2 {{formats.header === 2 ? 'ql-active' : ''}}" data-name="header" data-value="{{2}}"></i>
+  <i class="iconfont icon-format-header-3 {{formats.header === 3 ? 'ql-active' : ''}}" data-name="header" data-value="{{3}}"></i>
+  <i class="iconfont icon-zitijiacu {{formats.bold ? 'ql-active' : ''}}" data-name="bold"></i>
+  <i class="iconfont icon-zitixieti {{formats.italic ? 'ql-active' : ''}}" data-name="italic"></i>
+  <i class="iconfont icon-zitixiahuaxian {{formats.underline ? 'ql-active' : ''}}" data-name="underline"></i>
+  <i class="iconfont icon--checklist" data-name="list" data-value="check"></i>
+  <i class="iconfont icon-youxupailie {{formats.list === 'ordered' ? 'ql-active' : ''}}" data-name="list" data-value="ordered"></i>
+  <i class="iconfont icon-wuxupailie {{formats.list === 'bullet' ? 'ql-active' : ''}}" data-name="list" data-value="bullet"></i>
+</view>
+<!-- <view class="container" style="height:{{editorHeight}}px;">
+  <view style="display:flex;flex-direction:column;align-items: center;">
+    长按识别并关注公众号，获取留言提醒。
+    <view>
+      <image src="../../../images/qrcode.jpg" style="width:375rpx;" mode="aspectFit" />
+    </view>
+  </view>
+</view> -->

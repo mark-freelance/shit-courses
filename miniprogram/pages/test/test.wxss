@@ -1,0 +1,6 @@
+/* pages/test/test.wxss */
+.weui-tabs-swiper {
+  background-color: aqua;
+  height: calc(100vh - 800rpx) !important;
+  overflow-y: auto !important;
+}

@@ -1,0 +1,5 @@
+<view class="page">
+    <view wx:for="{{gameList}}" wx:key="_id">
+        <image class="img-center" src="{{item.img}}" bindtap="togame" data-url="{{item.url}}" mode="widthFix"></image>
+    </view>
+</view>

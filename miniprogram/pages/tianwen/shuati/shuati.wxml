@@ -1,0 +1,66 @@
+<!-- miniprogram/pages/tianwen/shuati/shuati.wxml -->
+<view class="page">
+  <image class="background" src="./bg.jpg" mode="scaleToFill"></image>
+  <view class="global-title" wx:if="{{loaddone}}">
+    <text>倒计时: {{time}} s（请勿返回）</text>
+  </view>
+  <view class="question-body">
+    <view class="choose-all">
+      <view class="choose">
+        <view class="cf1">一.单选题</view>
+        <view class="cf2">(答对加分，答错扣分，选E不得分）</view>
+      </view>
+      <view class="question-content" wx:key="_id" wx:for="{{questionResult}}" wx:for-index="indexs" wx:for-item="items">
+        <view wx:if="{{!items.is_fill}}">
+          <view class="question-content-text">
+            <text>{{indexs+1}}. {{items.question_text}}</text>
+          </view>
+          <view class="question-content-options">
+            <mp-cells title="" ext-class="box-a">
+              <mp-checkbox-group prop="checkbox" multi="">
+                <mp-checkbox ext-class="box" wx:key="_id" wx:for="{{items.question_options}}" wx:key="value" label="{{item.option}}. {{item.text}}" value="{{item.option}}" checked="{{item.checked}}" bindchange="boxChange" data-id="{{indexs}}" data-row="{{index}}"></mp-checkbox>
+              </mp-checkbox-group>
+            </mp-cells>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="fill-all">
+      <view class="fill" wx:if="{{has_no_fill == 0}}">
+        <view class="cf1">二.计算题</view>
+        <view class="cf2">（每空一个数字，小数已给出）</view>
+      </view>
+      <view class="question-content" wx:key="_id" wx:for="{{questionResult}}" wx:for-index="indexs" wx:for-item="items">
+        <view wx:if="{{items.is_fill}}">
+          <view class="question-content-text">
+            <text>{{indexs+1}}. {{items.question_text}}</text>
+          </view>
+          <view class="question-content-options" wx:if="{{items.is_fill}}">
+            <mp-cells ext-class="box-a">
+              <view class="weui-cell weui-cell_input" wx:key="_id" wx:for="{{items.question_options}}" wx:for-index="k_index" wx:for-item="k_item">
+                <text>{{k_item.option}}:</text>
+                <view class="fills" wx:key="_id" wx:for="{{k_item.text}}">
+                  <view wx:if="{{index==0}}">
+                    <input class="input" maxlength="1" wx:if="{{item != '.'}}" bindinput="bindKeyInput" focus="{{input_focuses[indexs][k_index].focuses[index]}}" data-id="{{index}}" data-row="{{k_index}}" data-index="{{indexs}}" type="text"></input>
+                    <view class="point" data-id="{{index}}" wx:else>.</view>
+                  </view>
+                  <view wx:else>
+                    <input class="input" maxlength="1" wx:if="{{item != '.'}}" bindinput="bindKeyInput" focus="{{input_focuses[indexs][k_index].focuses[index]}}" data-id="{{index}}" data-row="{{k_index}}" data-index="{{indexs}}" type="number"></input>
+                    <view class="point" data-id="{{index}}" wx:else>.</view>
+                  </view>
+                </view>
+              </view>
+            </mp-cells>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="button" slot="button" wx:if="{{loaddone}}">
+    <view class="btn" bindtap="onsubmit">提交</view>
+  </view>
+  <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+  <mp-dialog title="确认" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
+    <view>{{tips}}</view>
+  </mp-dialog>
+</view>

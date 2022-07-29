@@ -1,0 +1,69 @@
+<!-- miniprogram/pages/geren/bags/bags.wxml -->
+<view class="page">
+  <view wx:if="{{tips}}">{{tips}}</view>
+  <view class="modules">
+    <!-- <view class="title" bindtap="getkechengs" data-mid="{{item._id}}">
+      <view class="header2">{{item.module_name}}</view>
+      <view class="tips">点击查看课程</view>
+    </view> -->
+    <view>
+      <view class="activities">
+        <view class="activity-container" wx:for="{{modules}}" wx:key="_id" data-mid="{{item._id}}">
+          <view class="activity-item">
+            <view class="acitivity-icon">
+              <image src="{{item.module_image}}" mode="scaleToFill" style="width:120rpx; height:120rpx;" />
+            </view>
+            <view class="acitivity-info">
+              <view class="module-name">{{item.module_class}}</view>
+              <view class="module-name">{{item.abbr_name}}</view>
+              <view>{{item.desc}}</view>
+            </view>
+          </view>
+          <view class="action " style="margin-top:30rpx;margin-left:30rpx;margin-right:30rpx;">
+            <button class="action_button" size="mini" type="primary" data-id="{{item._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:20rpx;" bindtap="onComment">
+              撰写评价
+            </button>
+            <button class="action_button" size="mini" type="primary" data-id="{{item._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:0rpx;" open-type="share">
+              好物分享
+            </button>
+            <button class="action_button" size="mini" type="primary" disabled="{{item.invoiceState||item.invoiceState>0}}" data-id="{{item._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:0rpx;" bindtap="onInvoice">
+              {{item.invoiceText}}
+            </button>
+            <button class="action_button" size="mini" type="primary" data-id="{{item._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:0rpx;" bindtap="onStudy">
+              进入学习
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- <view class="article" wx:for="{{item.kechengs}}" data-mid="{{item._id}}">
+      <image bindtap="tokecheng" class="kecheng-image" src="{{item.kecheng_image}}" mode="aspectFill"></image>
+      <view class="kecheng-info">
+          <view class="kecheng-title" bindtap="tokecheng" data-kid="{{item._id}}">{{item.kecheng_name}}</view>
+          <view class="kecheng-desc" bindtap="tokecheng" data-kid="{{item._id}}">{{item.kecheng_desc}}</view>
+          <view bindtap="towatch" class="towatch" data-kid="{{item._id}}">点击去学习</view>
+      </view>
+    </view> -->
+    <!-- <view class="article" wx:key="_id"  wx:for="{{item.kechengs}}" >
+   
+      <view class="kecheng-info" bindtap="towatch"  data-kid="{{item._id}}" wx:if="{{item.if_ok}}">
+          <view class="kecheng-title" data-kid="{{item._id}}">{{item.kecheng_name}}</view>
+          <mp-badge wx:if="{{item.if_new}}" style="margin-left: 15px;" content="New" ext-class="blue"/>
+      </view>
+
+      <view class="kecheng-info" data-kid="{{item._id}}" style="background:rgba(213,210,217,0.3);opacity:0.45;" wx:if="{{!item.if_ok}}">
+          <view class="kecheng-title" data-kid="{{item._id}}">{{item.kecheng_name}}</view>
+      </view>
+    </view> -->
+  </view>
+</view>
+<view class="container" style="height:{{editorHeight}}px;" wx:if="{{showEditor}}">
+  <view class="title">
+    <button class="button" type="warn" size="mini" bindtap="onBack">返回</button>
+    <view class="k_name">评论</view>
+    <button class="button" type="primary" disabled="{{cantsubmit}}" size="mini" bindtap="onSubmit">
+      提交
+    </button>
+  </view>
+  <editor id="editor" class="ql-container" placeholder="{{placeholder}}" bindstatuschange="onStatusChange" bindready="onEditorReady" bindinput="onInput"></editor>
+</view>

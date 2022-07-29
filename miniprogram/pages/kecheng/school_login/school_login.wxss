@@ -1,0 +1,53 @@
+/* miniprogram/pages/kecheng/school_login/school_login.wxss */
+@import "../../../style/common.wxss";
+@import "../../../style/guide.wxss";
+@import "../../../style/weui.wxss";
+
+.page {
+  width: 95%;
+  margin: 20px auto;
+  color: #565e73;
+}
+
+.lable {
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  margin-top: 30px;
+  background: #ffffff;
+}
+
+.input {
+  padding-top: 13px;
+}
+
+.but {
+  height: 30px;
+  margin-top: 30px;
+}
+.button {
+  background: #4186bd;
+  color: #fff;
+}
+
+.buy-tip-text {
+  font-size: 26rpx;
+  color: gray;
+  text-align: center;
+  border-top: #565e73 solid 1px;
+  width: auto;
+  margin-left: 55rpx;
+}
+.tipp {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.buy-tip {
+  bottom: 35px;
+  position: fixed;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+}

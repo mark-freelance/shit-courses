@@ -1,0 +1,7 @@
+{
+  "disableScroll": true,
+  "usingComponents": {
+    "mp-tabs": "@miniprogram-component-plus/tabs"
+  },
+  "navigationBarTitleText": "活动详情"
+}

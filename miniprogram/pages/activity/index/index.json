@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "mp-icon": "weui-miniprogram/icon/icon",
+    "selector-component": "plugin://citySelector/selector-component",
+    "mp-badge": "weui-miniprogram/badge/badge"
+  },
+  "navigationBarTitleText": "天文活动"
+}

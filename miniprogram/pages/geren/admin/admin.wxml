@@ -1,0 +1,35 @@
+<!--miniprogram/pages/geren/admin/admin.wxml-->
+<!--index.wxml-->
+<view class="container">
+<!--答题记录-->
+<!--个人信息-->
+<view class="uploader">
+  <view bindtap="" open-type="navigate" class="uploader-text">
+    <image style="width:25px;height:25px;padding-top:13px"  src="./5.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px">发布课程</view>
+  </view>
+</view>
+
+<view class="uploader">
+  <view bindtap="" open-type="navigate" class="uploader-text">
+    <image style="width:25px;height:25px;padding-top:13px"  src="./6.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px">发布活动</view>
+  </view>
+</view>
+
+<view class="uploader">
+  <view bindtap="" open-type="navigate" class="uploader-text">
+    <image style="width:25px;height:25px;padding-top:13px"  src="./6.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px">发布测试</view>
+  </view>
+</view>
+
+<view class="uploader">
+  <view bindtap="" open-type="navigate" class="uploader-text">
+    <image style="width:25px;height:25px;padding-top:13px"  src="./6.jpg" mode="aspectFit"></image>
+      <view style="margin-left:20px;margin-bottom:5px">发布商品</view>
+  </view>
+</view>
+
+
+</view>

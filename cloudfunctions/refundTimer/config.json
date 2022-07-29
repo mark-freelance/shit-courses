@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "openapi": [
+    ]
+  },
+  "triggers": [
+    {
+      "name": "refundTimer",
+      "type": "timer",
+      "config": "*/50  *  *  *  *  *  *"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "pages": [
+    "pages/kecheng/index/index",
+    "pages/activity/detail/detail",
+    "pages/tianwen/index/index",
+    "pages/geren/userConsole/userConsole",
+    "pages/geren/index/index",
+    "pages/tianwen/shuati/shuati",
+    "pages/tianwen/result/result",
+    "pages/game/index/index",
+    "pages/game/game/game",
+    "pages/kecheng/kecheng/kecheng",
+    "pages/kecheng/shop/shop",
+    "pages/kecheng/kechengplay/kechengplay",
+    "pages/kecheng/teachers/teachers",
+    "pages/kecheng/student/student",
+    "pages/activity/index/index",
+    "pages/geren/bags/bags",
+    "pages/geren/saved/saved",
+    "pages/kecheng/editor/editor",
+    "pages/geren/cuotiben/cuotiben",
+    "pages/kecheng/weidian/weidian",
+    "pages/geren/xiaoxi/xiaoxi",
+    "pages/geren/fapiao/fapiao",
+    "pages/kecheng/school_login/school_login",
+    "pages/geren/schoolorders/schoolorder",
+    "pages/geren/bind/bind",
+    "pages/geren/activity/activity",
+    "pages/geren/admin/admin"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "天文连线",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#1296db",
+    "borderStyle": "white",
+    "backgroundColor": "#F6F6F6",
+    "list": [
+      {
+        "pagePath": "pages/kecheng/index/index",
+        "iconPath": "images/class1.png",
+        "selectedIconPath": "images/class2.png",
+        "text": "天文课程"
+      },
+      {
+        "pagePath": "pages/game/index/index",
+        "iconPath": "images/game.png",
+        "selectedIconPath": "images/game2.png",
+        "text": "天文软件"
+      },
+      {
+        "pagePath": "pages/activity/index/index",
+        "iconPath": "images/tous.png",
+        "selectedIconPath": "images/tous2.png",
+        "text": "天文活动"
+      },
+      {
+        "pagePath": "pages/geren/index/index",
+        "iconPath": "images/user1.png",
+        "selectedIconPath": "images/user2.png",
+        "text": "个人中心"
+      }
+    ]
+  },
+  "useExtendedLib": {
+    "weui": true
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于匹配附近的天文活动"
+    }
+  },
+  "plugins": {
+    "citySelector": {
+      "version": "1.0.1",
+      "provider": "wx63ffb7b7894e99ae"
+    }
+  }
+}

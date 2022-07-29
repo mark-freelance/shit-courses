@@ -1,0 +1,80 @@
+<!-- miniprogram/pages/geren/bags/bags.wxml -->
+<view class="page">
+  <view wx:if="{{tips}}">{{tips}}</view>
+  <view class="modules">
+    <!-- <view class="title" bindtap="getkechengs" data-mid="{{item._id}}">
+      <view class="header2">{{item.module_name}}</view>
+      <view class="tips">点击查看课程</view>
+    </view> -->
+    <view>
+      <view class="activities">
+        <view class="activity-container" wx:for="{{activityList}}" wx:key="_id" data-id="{{item._id}}" bindtap="onActivityDetail">
+          <view class="activity-item">
+            <view class="acitivity-icon">
+              <image src="{{item.icon}}" mode="scaleToFill" style="width:160rpx; height:160rpx;" />
+            </view>
+            <view class="acitivity-info">
+              <view style="font-weight:bold">
+                {{item.name}}
+                <mp-badge wx:if="{{item.is_new}}" style="margin-left: 2rpx;" content="new" ext-class="blue" />
+              </view>
+              <view>{{item.desc}}</view>
+              <view>
+                {{item.timeShow}}
+                <text decode="true">&nbsp;|&nbsp;</text>
+                {{item.locationShow}}
+              </view>
+              <view style="display:flex;flex-direction:row">
+                <view style="flex:1;">￥{{item.price}}/人</view>
+                <view style="flex:1;text-align:right;">销量{{item.saleCount}}</view>
+              </view>
+            </view>
+          </view>
+          <view class="action " style="margin-top:30rpx;margin-left:30rpx;margin-right:30rpx;">
+            <button class="action_button" size="mini" type="primary" data-id="{{item._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:20rpx;" bindtap="onComment">
+              撰写评价
+            </button>
+            <button class="action_button" size="mini" type="primary" data-id="{{item._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:0rpx;" open-type="share">
+              好物分享
+            </button>
+            <button class="action_button" size="mini" type="primary" disabled="{{item.invoiceState||item.invoiceState>0}}" data-id="{{item._id}}" data-oid="{{item.orderid}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:0rpx;" bindtap="onInvoice">
+              {{item.invoiceText}}
+            </button>
+            <button class="action_button" size="mini" type="primary" disabled="{{item.refundState||item.refundState>0}}" data-id="{{item._id}}" data-oid="{{item.orderid}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:0rpx;" bindtap="onRefund">
+              {{item.refundText}}
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- <view class="article" wx:for="{{item.kechengs}}" data-mid="{{item._id}}">
+      <image bindtap="tokecheng" class="kecheng-image" src="{{item.kecheng_image}}" mode="aspectFill"></image>
+      <view class="kecheng-info">
+          <view class="kecheng-title" bindtap="tokecheng" data-kid="{{item._id}}">{{item.kecheng_name}}</view>
+          <view class="kecheng-desc" bindtap="tokecheng" data-kid="{{item._id}}">{{item.kecheng_desc}}</view>
+          <view bindtap="towatch" class="towatch" data-kid="{{item._id}}">点击去学习</view>
+      </view>
+    </view> -->
+    <!-- <view class="article" wx:key="_id"  wx:for="{{item.kechengs}}" >
+   
+      <view class="kecheng-info" bindtap="towatch"  data-kid="{{item._id}}" wx:if="{{item.if_ok}}">
+          <view class="kecheng-title" data-kid="{{item._id}}">{{item.kecheng_name}}</view>
+          <mp-badge wx:if="{{item.if_new}}" style="margin-left: 15px;" content="New" ext-class="blue"/>
+      </view>
+
+      <view class="kecheng-info" data-kid="{{item._id}}" style="background:rgba(213,210,217,0.3);opacity:0.45;" wx:if="{{!item.if_ok}}">
+          <view class="kecheng-title" data-kid="{{item._id}}">{{item.kecheng_name}}</view>
+      </view>
+    </view> -->
+  </view>
+</view>
+<view class="container" style="height:{{editorHeight}}px;" wx:if="{{showEditor}}">
+  <view class="title">
+    <button class="button" type="warn" size="mini" bindtap="onBack">返回</button>
+    <view class="k_name">评论</view>
+    <button class="button" type="primary" disabled="{{cantsubmit}}" size="mini" bindtap="onSubmit">
+      提交
+    </button>
+  </view>
+  <editor id="editor" class="ql-container" placeholder="{{placeholder}}" bindstatuschange="onStatusChange" bindready="onEditorReady" bindinput="onInput"></editor>
+</view>

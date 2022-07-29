@@ -1,0 +1,44 @@
+<!--miniprogram/pages/kecheng/shop/shop.wxml-->
+<view class="page">
+  <view>当前分销入口：{{company}}</view>
+  <view class="header">商品信息</view>
+  <view class="article">
+      <image class="kecheng-image" src="{{module.module_image}}" mode="aspectFill"></image>
+      <view class="kecheng-info">
+          <view class="kecheng-title">{{module.module_name}}</view>
+          <view  style="color:gray;font-size:small;text-align:left;padding-left:10px">天文奥赛国际金银牌选手打造</view>
+          <view class="pppp">
+            <view class="kecheng-desc" wx:if="{{jumptype == 0}}" style="text-decoration:line-through">¥650</view>
+            <view class="kecheng-desc" style="margin-left:10px">¥{{module.module_price}}</view>
+          </view> 
+          
+      </view>
+  </view>
+  <view class="buy">
+    <view class="should-pay">应付:¥{{module.module_price}}</view>
+    <view bindtap="buy" class="button" data-price="{{module.module_price}}">微信付款</view>
+  </view>
+  <view class="buy-tip" wx:if="{{jumptype == 0}}">
+    <text>本课程包含虚拟商品，购买后可以在已购课程中学习，购买成功，概不负责</text>
+  </view>
+  <view class="buy-tip" wx:if="{{jumptype == 1}}">
+    <text>学校购买政策:</text>
+    <text>
+      1.仅支持全套购买，不支持分模块购买；全套售价¥6000
+      2.分配7个子账号，每个子账号每节课限制提问2次
+      3.请妥善保存7个子账号，可以在历史订单中查看
+      4.账号有效期为1个顺延年，到期自动失效
+      5.有效期起始日期为购买当日
+      6.发票请在  「个人中心」-「申请开票」自助开具
+      7.有问题可联系工作人员：707166693@qq.com
+
+    </text>
+    
+  </view>
+ 
+
+  <view class="details" wx:if="{{jumptype == 1}}">
+    <button bindtap="togetinfos" type="primary">查看历史订单</button>
+  </view>
+  
+</view>

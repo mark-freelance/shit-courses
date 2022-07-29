@@ -1,0 +1,9 @@
+<!-- miniprogram/pages/game/game/game.wxml -->
+<view class="page">
+  <view class="backgroud-image">
+    <!-- <movable-area class="movablearea">
+      <movable-view class="movableview" x="{{x}}" y="{{y}}" direction="all">天女座</movable-view>
+    </movable-area> -->
+    <web-view src="{{url}}" />
+  </view>
+</view>

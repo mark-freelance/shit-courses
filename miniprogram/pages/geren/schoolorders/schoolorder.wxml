@@ -1,0 +1,21 @@
+<!--miniprogram/pages/geren/schoolorders/schoolorder.wxml-->
+<view class="page">
+  <view class="mid">
+    <view style="margin-top:20px" wx:for="{{school_infos}}">
+      <view>已购课程：天文高阶课程</view>
+      <view>购买日期：{{item.timeEnd}} </view>
+      <view>有效期至：{{item.timeEnd}}</view>
+      <view>支付金额：¥{{item.totalFee/100}}</view>
+      <view>字账号信息：</view>
+      <view class="items" wx:for="{{item.attach}}" >
+        <text user-select="true" style="width:33%">账号:{{item.username}}</text>
+        <text user-select="true" style="padding-left:17px">密码:{{item.password}}</text>
+        <!--
+          <view wx:if="{{item.checked}}" style="padding-left:17px">状态:已绑定</view>
+          <view wx:if="{{!item.checked}}" style="padding-left:17px">状态:未绑定</view>
+        -->
+       
+      </view>
+    </view>
+  </view>
+</view>

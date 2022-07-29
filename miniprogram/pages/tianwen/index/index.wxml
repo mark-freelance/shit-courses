@@ -1,0 +1,26 @@
+<view class="page">
+    <view class="page__hd">
+        <!-- 用户 openid -->
+         <view class="userinfo">
+         <image class="userinfo-avatar" src="./xinqiu.png">
+         </image>
+            <view class="userinfo-nickname-wrapper">
+            <text class="userinfo-nickname">欢迎来到青年天文连线教育</text>
+            </view>
+        </view>
+    </view>
+    <view class="page__bd">
+        <view class="icon-box">
+            <view class="weui-grids">
+                <block wx:for="{{iconList}}" wx:key="*this">
+                    <view  class="weui-grid" bindtap="{{item.bindtap}}">
+                        <mp-icon type="filled" icon="{{item.icon}}" color="{{item.color}}" size="{{item.size}}"></mp-icon>
+                        <view class="weui-grid__label">{{item.name}}</view>
+                    </view>
+                </block>
+            </view>
+        </view>
+    </view>
+    <mp-actionSheet bindactiontap="btnClick" show="{{showActionsheet}}" actions="{{groups}}" title="请选择试卷组别">
+    </mp-actionSheet>
+</view>

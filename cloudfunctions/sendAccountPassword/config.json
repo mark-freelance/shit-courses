@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "openapi": [
+      "templateMessage.send",
+      "uniformMessage.send"
+    ]
+  },
+  "triggers": [
+    {
+      "name": "sendAccountPassword",
+      "type": "timer",
+      "config": "*/50  *  *  *  *  *  *"
+    }
+  ]
+}

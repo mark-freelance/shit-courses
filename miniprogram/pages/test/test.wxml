@@ -1,0 +1,38 @@
+<!-- pages/test/test.wxml -->
+<view>
+    <view>
+        <image src="../../images/record.png" mode="aspectFit" style="width:50%" />
+        <mp-tabs tabs="{{tabs}}" activeTab="{{activeTab}}" swiperClass="weui-tabs-swiper" bindtabclick="onTabClick" bindchange="onChange" activeClass="tab-bar-title__selected" tab-class="tabclass">
+            <block wx:for="{{tabs}}" wx:key="title">
+                <view class="tab-content" slot="tab-content-{{index}}">
+                    <view wx:if="{{index == 0}}">
+                        <scroll-view scroll-y="true" style="position:fixed; bottom: 20rpx;top: 50rpx;background: #888;">
+                            <view>
+                                <image src="../../images/学生成绩.png" />
+                            </view>
+                            <view>
+                                <image src="../../images/学生成绩.png" />
+                            </view>
+                            <view>
+                                <image src="../../images/学生成绩.png" />
+                            </view>
+                            <view>
+                                <image src="../../images/学生成绩.png" />
+                            </view>
+                            <view>
+                                <image src="../../images/学生成绩.png" />
+                            </view>
+                        </scroll-view>
+                    </view>
+                </view>
+            </block>
+        </mp-tabs>
+    </view>
+</view>
+<!-- .kecheng-comment2 {
+  bottom: 20rpx;
+  position: fixed;
+  top: 1px;
+  background: #fff;
+  width: 100%;
+} -->

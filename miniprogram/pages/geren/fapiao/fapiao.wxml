@@ -1,0 +1,41 @@
+<!-- miniprogram/pages/geren/fapiao/fapiao.wxml -->
+<view class="page">
+  <view class="fuwu">服务项目：咨询费</view>
+  <view class="lable">
+    <view class="input">抬头名称:</view>
+    <view class="weui-cell weui-cell_input">
+      <input class="weui-input" bindinput="bindinputA" placeholder="点击“添加抬头”添加" value="{{fapiao.title}}"></input>
+    </view>
+  </view>
+  <view class="lable">
+    <view class="input">抬头税号:</view>
+    <view class="weui-cell weui-cell_input">
+      <input class="weui-input" bindinput="bindinputB" placeholder="点击“添加抬头“添加" value="{{fapiao.taxNumber}}"></input>
+    </view>
+  </view>
+  <!-- <view class="lable">
+    <view class="input">支付金额:</view>
+    <view class="weui-cell weui-cell_input">
+      <input class="weui-input" bindinput="bindinputC" placeholder="与支付金额一致"></input>
+    </view>
+  </view> -->
+  <view class="lable">
+    <view class="input">联系邮箱:</view>
+    <view class="weui-cell weui-cell_input">
+      <input class="weui-input" bindinput="bindinputD" bindblur="bindblurD" placeholder="必填"></input>
+    </view>
+  </view>
+  <view class="lable">
+    <view class="input">联系电话:</view>
+    <view class="weui-cell weui-cell_input">
+      <input type="number" class="weui-input" bindinput="bindinputE" placeholder="必填"></input>
+    </view>
+  </view>
+  <view class="fapiao-tips">发票将在7个工作日内完成开具并发送到您的邮箱！</view>
+  <view class="but">
+    <button class="button" bindtap="togetfapiao">添加抬头</button>
+  </view>
+  <view class="but">
+    <button class="button" disabled="{{disabled}}" bindtap="submit">申请开票</button>
+  </view>
+</view>

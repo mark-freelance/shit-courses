@@ -1,0 +1,24 @@
+.input {
+  width: 560rpx;
+  height: 60rpx;
+  border-radius: 20rpx;
+  background-color: #fff;
+  margin-left: 40rpx;
+}
+.flex-row {
+  margin-top: 80rpx;
+  margin-left: 40rpx;
+  display: flex;
+  flex-direction: row;
+}
+.submit-button {
+  margin-left: 300rpx;
+  margin-top: 120rpx;
+  background-color: cornflowerblue;
+  width: 160rpx;
+  height: 80rpx;
+  text-align: center;
+  border-radius: 20rpx;
+  color: #fff;
+  padding-top: 18rpx;
+}

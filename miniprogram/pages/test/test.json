@@ -1,0 +1,4 @@
+{
+  "disableScroll": true,
+  "usingComponents": {"mp-tabs": "@miniprogram-component-plus/tabs"}
+}

@@ -1,0 +1,46 @@
+<!-- miniprogram/pages/kecheng/kecheng/kecheng.wxml -->
+<view class="page">
+  <view class="header" style="padding-top:20rpx;">
+    <view wx:for="{{module.module_suggestion}}" wx:key="_id">
+      <text style="">{{item.text}}</text>
+    </view>
+  </view>
+  <view class="mid-title">
+    <text class="mulu">{{module.module_name}}模块</text>
+  </view>
+  <view class="mid">
+    <view class="article" bindtap="toshuati1" wx:if="{{!module.no_modi}}">
+      <view class="kecheng-info">
+        <view class="kecheng-title" data-kid="{{item._id}}">0. 摸底测试</view>
+      </view>
+      <!-- <view bindtap="toshuati1" class="towatch" data-kid="{{item._id}}" wx:if="{{if_buy}}">◁ 检测</view>
+    <view bindtap="toshuati1" class="towatch" data-kid="{{item._id}}" wx:if="{{!if_buy}}">检测</view> -->
+    </view>
+    <view class="article" wx:key="_id" wx:for="{{kechengs}}">
+      <!-- 1 -->
+      <view class="kecheng-info" bindtap="towatch" data-kid="{{item._id}}" wx:if="{{item.if_ok}}">
+        <view class="kecheng-title" data-kid="{{item._id}}">{{item.kecheng_name}}</view>
+        <mp-badge wx:if="{{item.if_new}}" style="margin-left: 15px;" content="New" ext-class="blue" />
+      </view>
+      <!-- 3 -->
+      <view class="kecheng-info" data-kid="{{item._id}}" style="background:rgba(213,210,217,0.3);opacity:0.45;" wx:if="{{!item.if_ok}}">
+        <view class="kecheng-title" data-kid="{{item._id}}">{{item.kecheng_name}}</view>
+      </view>
+    </view>
+    <view class="article" bindtap="toshuati2" wx:if="{{!module.no_jiance1}}">
+      <view class="kecheng-info">
+        <view class="kecheng-title" data-kid="{{item._id}}">{{kechengs.length + 1}}. 知识检测（卷一）</view>
+      </view>
+    </view>
+  </view>
+  <view class="buy-tip">
+    <!-- <text class="buy-tip-text">课程为虚拟产品，购买成功后，概不退款，敬请理解</text> -->
+  </view>
+</view>
+<view class="kecheng-price" wx:if="{{canShow&&!if_buy&&!is_free&&user.identityType!='teacher'&&!schoolUser.isSchoolUser}}">
+  <view class="price" bindtap="toshiting">试听第{{module.exp_index}}节</view>
+  <view class="buy-or-play" style="width:140rpx;" bindtap="tobuy" data-mid="{{module._id}}">
+    <!-- <view style="text-decoration:line-through">￥650</view> -->
+    <view style="">￥{{module.module_price}}</view>
+  </view>
+</view>

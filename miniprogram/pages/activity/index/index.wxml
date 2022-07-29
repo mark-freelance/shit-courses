@@ -1,0 +1,156 @@
+<!-- miniprogram/pages/kecheng/us/us.wxml -->
+<view>
+    <view>
+        <swiper indicator-dots="true" indicator-color="rgba(0, 0, 0, .3)" indicator-active-color="#000000" autoplay="true" interval="5000" duration="500" circular="false" style='height:450rpx;'>
+            <block wx:for="{{swiperList}}" wx:key="_id">
+                <swiper-item class="swiper-item" item-id="{{item._id}}" data-id="{{item._id}}" data-url="{{item.redirectUrl}}" bindtap="onSwiperClick">
+                    <image class="swiper-image" src="{{item.imageUrl}}" mode="widthFix" />
+                </swiper-item>
+            </block>
+        </swiper>
+    </view>
+    <view>
+        <view class="current-city" style="margin-top:20rpx">
+            <mp-icon class="location-icon" icon="location" type="field" color="black" size="{{20}}"></mp-icon>
+            <view class="location-label">当前定位城市</view>
+            <block>
+                <selector-component show="{{selectorVisible}}" key="LTMBZ-GN6WW-JT2RZ-OXT6R-4YIOO-3RFDK" referer="天文连线" hotCitys="" bindselect="onSelectCity"></selector-component>
+                <view wx:if="{{hasLocation}}" class="location-district" bindtap="onSelectCity">
+                    {{city.name}}
+                </view>
+                <button wx:else size="mini" class="auth-btn" type="primary" open-type="openSetting" bindopensetting="onOpenSetting">
+                    去授权
+                </button>
+            </block>
+        </view>
+        <!-- 用于渲染直角背景 
+        <view class="filter-view" style="margin-top:30rpx;">
+            <view class="filter-label"></view>
+            <view class="filter-item">
+                <view class="filter-loction" style=" border-radius: 0rpx;">
+                    <view style="color:#dddddd">位置</view>
+                </view>
+            </view>
+            <view class="filter-item" style="display:none">
+                <view class="filter-time" style=" border-radius: 0rpx;">
+                    <view style="color:#dddddd">时长</view>
+                </view>
+            </view>
+            <view class="filter-item" style="display:none">
+                <view class="filter-class" style=" border-radius: 0rpx;">
+                    <view style="color:#dddddd">类型</view>
+                </view>
+            </view>
+            <view class="filter-item" style="display:none">
+                <view class="filter-level" style=" border-radius: 0rpx;">
+                    <view style="color:#dddddd">等级</view>
+                </view>
+            </view>
+        </view> 
+        <view class="filter-view">
+            <view class="filter-label">筛选：</view>
+            <view class="filter-item">
+                <view class="filter-loction">
+                    <view>位置</view>
+                    <view>
+                        <image class="filter-arrow" src="../../../images/arrow.png" />
+                    </view>
+                </view>
+            </view>
+            <view class="filter-item">
+                <view class="filter-time">
+                    <view>时长</view>
+                    <view>
+                        <image class="filter-arrow" src="../../../images/arrow.png" />
+                    </view>
+                </view>
+            </view>
+            <view class="filter-item">
+                <view class="filter-class">
+                    <view>类型</view>
+                    <view>
+                        <image class="filter-arrow" src="../../../images/arrow.png" />
+                    </view>
+                </view>
+            </view>
+            <view class="filter-item">
+                <view class="filter-level">
+                    <view>等级</view>
+                    <view>
+                        <image class="filter-arrow" src="../../../images/arrow.png" />
+                    </view>
+                </view>
+            </view>
+        </view> -->
+        <!-- <view class="filter-detail-view">
+            <view class="filter-detail-label">
+                全国
+                <mp-icon icon="done" type="field" color="black" size="{{10}}"></mp-icon>
+            </view>
+            <view class="filter-detail-label">
+                同城
+                <mp-icon icon="done" type="field" color="black" size="{{10}}"></mp-icon>
+            </view>
+            <view class="filter-detail-label">
+                同城
+                <mp-icon icon="done" type="field" color="black" size="{{10}}"></mp-icon>
+            </view>
+            <view class="filter-detail-label">同城</view>
+        </view> -->
+        <view class="filter">
+            <view class="filter-line">
+                <view wx:for="{{tags.tag1}}" wx:key="id">
+                    <view class="filter-item" bindtap="onFilter" data-filter="{{item.text}}" style="margin-left:{{item.marginleft}}rpx;background-color:{{item.bgColor}}">
+                        {{item.text}}
+                    </view>
+                </view>
+                <view wx:for="{{tags.tag2}}" wx:key="id">
+                    <view class="filter-item" bindtap="onFilter" data-filter="{{item.text}}" style="margin-left:{{item.marginleft}}rpx;background-color:{{item.bgColor}}">
+                        {{item.text}}
+                    </view>
+                </view>
+            </view>
+            <view class="filter-line">
+                <view wx:for="{{tags.tag3}}" wx:key="id">
+                    <view class="filter-item" bindtap="onFilter" data-filter="{{item.text}}" style="margin-left:{{item.marginleft}}rpx;background-color:{{item.bgColor}}">
+                        {{item.text}}
+                    </view>
+                </view>
+                <view wx:for="{{tags.tag4}}" wx:key="id">
+                    <view class="filter-item" bindtap="onFilter" data-filter="{{item.text}}" style="margin-left:{{item.marginleft}}rpx;background-color:{{item.bgColor}}">
+                        {{item.text}}
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!-- <view class="break"></view> -->
+    <view>
+        <!-- <scroll-view class="" scroll-y="true" style="height:200px;margin-top:40rpx;"> -->
+        <view class="activities">
+            <view class="activity-item" wx:for="{{activityList}}" wx:key="_id" data-id="{{item._id}}" bindtap="onActivityDetail">
+                <view class="acitivity-icon">
+                    <image src="{{item.icon}}" mode="scaleToFill" style="width:160rpx; height:160rpx;" />
+                </view>
+                <view class="acitivity-info">
+                    <view style="font-weight:bold">
+                        {{item.name}}
+                        <mp-badge wx:if="{{item.is_new}}" style="margin-left: 2rpx;" content="new" ext-class="blue" />
+                    </view>
+                    <view>{{item.desc}}</view>
+                    <view>
+                        {{item.timeShow}}
+                        <text decode="true">&nbsp;|&nbsp;</text>
+                        {{item.locationShow}}
+                    </view>
+                    <view style="display:flex;flex-direction:row">
+                        <view style="flex:1;">￥{{item.price}}/人</view>
+                        <view style="flex:1;text-align:right;">销量{{item.saleCount}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- </scroll-view> -->
+    </view>
+    <view class="scrollSpase" style="display:block;height:80rpx;"></view>
+</view>

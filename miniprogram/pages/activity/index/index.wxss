@@ -1,0 +1,144 @@
+/* miniprogram/pages/kecheng/us/us.wxss */
+.swiper-item {
+  width: 100%;
+}
+.swiper-image {
+  width: 100%;
+  height: 300rpx;
+}
+.auth-btn {
+  width: 30rpx;
+  height: 40rpx;
+}
+.current-city {
+  display: flex;
+  flex-direction: row;
+  color: #565e73;
+}
+.location-icon {
+  margin-left: 30rpx;
+}
+.location-label {
+  margin-left: 0px;
+}
+.location-district {
+  margin-left: 40rpx;
+  font-weight: bold;
+}
+.filter {
+  margin-top: 10rpx;
+  height: 120rpx;
+  color: #565e73;
+}
+.filter-line {
+  margin-top: 20rpx;
+  float: left;
+  display: flex;
+  flex-direction: row;
+  font-size: small;
+}
+
+.filter-view {
+  display: flex;
+  flex-direction: row;
+}
+.filter-label {
+  margin-left: 40rpx;
+  flex: 1;
+}
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+.filter-item {
+  background-color: #a5c3dd;
+  border-radius: 14rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+}
+
+.activities {
+  margin-top: 100rpx;
+  color: #565e73;
+}
+.activity-item {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30rpx;
+}
+
+.acitivity-icon {
+  margin-left: 30rpx;
+  box-shadow: 8rpx 8rpx 8rpx rgba(0, 0, 0, 0.35);
+  border-radius: 25rpx;
+  width: 160rpx;
+  height: 160rpx;
+}
+.acitivity-info {
+  font-size: small;
+  margin-left: 16rpx;
+  width: 500rpx;
+}
+.filter-loction {
+  background-color: #c0c0c0;
+  border-radius: 30rpx;
+  padding-left: 12rpx;
+  padding-right: 12rpx;
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+}
+.filter-time {
+  flex: 1;
+  background-color: #dddddd;
+  border-radius: 30rpx;
+  padding-left: 12rpx;
+  padding-right: 12rpx;
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+}
+.filter-class {
+  flex: 1;
+  background-color: #dddddd;
+  border-radius: 30rpx;
+  padding-left: 12rpx;
+  padding-right: 12rpx;
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+}
+.filter-level {
+  flex: 1;
+  background-color: #dddddd;
+  border-radius: 30rpx;
+  padding-left: 12rpx;
+  padding-right: 12rpx;
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+}
+.filter-arrow {
+  margin-left: 5rpx;
+  width: 12rpx;
+  height: 8rpx;
+  vertical-align: middle;
+}
+.filter-detail-view {
+  background-color: #dddddd;
+  border-radius: 30rpx;
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+}
+.filter-detail-label {
+  width: 50%;
+  float: left;
+  margin-left: 30rpx;
+}
+
+.blue {
+  background-color: #ea68a2;
+}

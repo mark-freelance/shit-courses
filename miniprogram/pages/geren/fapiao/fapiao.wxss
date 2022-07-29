@@ -1,0 +1,41 @@
+/* miniprogram/pages/geren/fapiao/fapiao.wxss */
+.page {
+  width: 95%;
+  margin: 10px auto;
+  color: #565e73;
+}
+
+.lable {
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  margin-top: 10px;
+  background: #ffffff;
+}
+
+.input {
+  padding-top: 13px;
+}
+
+.but {
+  height: 30px;
+  margin-top: 30px;
+}
+.button {
+  background: #4186bd;
+  color: #fff;
+}
+
+.buy-tip-text {
+  font-size: 13px;
+  color: gray;
+  text-align: center;
+  border-top: #565e73 solid 1px;
+  width: auto;
+}
+
+.fapiao-tips {
+  text-align: center;
+  margin-top: 40rpx;
+  font-size: 30rpx;
+}

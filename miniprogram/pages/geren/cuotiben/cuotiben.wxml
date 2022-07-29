@@ -1,0 +1,47 @@
+<!-- miniprogram/pages/geren/cuotiben/cuotiben.wxml -->
+<view class="page">
+    <image class="background" src="./bg.jpg" mode="scaleToFill"></image>
+    <view class="contents">
+        <view class="wrong-list" wx:key="_id" wx:for="{{cuotis}}">
+            <view data-q="{{item.wrong_answer}}" bindtap="tolearn" data-q="{{item}}">
+                <view>{{item.wrong_answer.question_text}}</view>
+                <view>【题目类型:  {{item.wrong_answer.question_class}}】</view>
+                <view wx:key="_id" wx:for="{{item.wrong_answer.question_options}}" wx:for-index="idx" wx:for-item="itemName" class="options">
+                    <view wx:if="{{!item.wrong_answer.is_fill}}">
+                        <view wx:if="{{itemName.checked == true}}" class="wrong-answer">
+                            {{itemName.option}}.  {{itemName.text}}
+                        </view>
+                        <view wx:else="{{itemName.checked == false}}" class="rights">
+                            <view wx:if="{{itemName.option == item.wrong_answer.question_answer}}" class="right-answer">
+                                {{itemName.option}}.  {{itemName.text}}
+                            </view>
+                            <view wx:else class="other">
+                                {{itemName.option}}. {{itemName.text}}
+                            </view>
+                        </view>
+                    </view>
+                    <view wx:if="{{item.wrong_answer.is_fill}}">
+                        <view class="fillcf">
+                            <view>{{itemName.option}}.</view>
+                            <view style="width:30px;background:#07c160;padding-left:5px;padding-right:5px;">
+                                {{itemName.text}}
+                            </view>
+                            <view style="width:30px;background:#FA8072;margin-left:35px;padding-left:5px;padding-right:5px">
+                                {{itemName.fill}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="download">
+                <view style="width:80%"></view>
+                <view class="down-png" bindtap="todelete" data-q="{{item}}">
+                    <image src="./delete.png" style="width:25px;height:25px"></image>
+                </view>
+            </view>
+            <view>
+                <image class="jiexi" style="width:100%;" src="{{item.wrong_answer.jiexi}}" mode="widthFix" wx:if="{{item.wrong_answer.jiexi}}"></image>
+            </view>
+        </view>
+    </view>
+</view>

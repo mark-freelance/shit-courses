@@ -1,0 +1,88 @@
+/* miniprogram/pages/kecheng/shop/shop.wxss */
+.page{
+  width: 90%;
+  margin: 0 auto;
+  color: #565e73;
+}
+.article{
+  width: 100%;
+  margin: 10px auto;
+  height: 100px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow:  0 3px 6px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  flex-direction: row;
+  display: flex;
+
+}
+.kecheng-image{
+  width: 30%;
+  height: 80px;
+  padding-left: 10px;
+  padding-top:10px;
+  border-radius: 5px;
+}
+.kecheng-title{
+  padding-top: 10px;
+  padding-left: 10px;
+  
+  font-weight: bold;
+  text-align: left;
+}
+
+.kecheng-desc{
+  padding-top: 7px;
+  padding-left: 10px;
+  font-size: large;
+  font-weight: bold;
+  text-align: left;
+}
+.kecheng-info{
+  width: 70%;
+}
+
+.towatch{
+  text-align: center;
+  background-color: #FE7700;
+  color: #fff;
+  border-radius: 10px;
+  margin-left: 10px;
+  width: 80%;
+}
+.buy{
+  width: 95%;
+  margin: 10px auto; 
+  flex-direction: row;
+  display: flex;
+}
+
+.buy-tip{
+  font-size: small;
+  color:rgba(128, 128, 128);
+  width: 90%;
+  margin: 10px auto;
+}
+.button{
+  width: 60%;
+  background-color: #4186bd;
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: larger;
+}
+.should-pay{
+  width: 40%;
+  text-align: left;
+  font-weight: normal;
+  font-size: large;
+  padding-left: 10px;
+}
+.header{
+  margin-left: 10px;
+}
+.pppp{
+  display: flex;
+  flex-direction: row;
+}

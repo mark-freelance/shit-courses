@@ -1,0 +1,355 @@
+/* miniprogram/pages/geren/bags/bags.wxss */
+/* miniprogram/pages/kecheng/index/index.wxss */
+
+.page {
+  color: #565e73;
+  width: 100%;
+  margin: 20px auto;
+}
+
+.activities {
+  margin-top: 0rpx;
+  color: #565e73;
+}
+.activity-container {
+  background-color: #fff;
+  margin-top: 30rpx;
+  padding-top: 16rpx;
+  padding-bottom: 16rpx;
+  box-shadow: 0rpx 8rpx 8rpx rgba(0, 0, 0, 0.35);
+}
+.activity-item {
+  display: flex;
+  flex-direction: row;
+  color: #565e73;
+}
+.module-name {
+  font-size: medium;
+  font-weight: bold;
+}
+
+.acitivity-icon {
+  margin-left: 60rpx;
+  box-shadow: 0rpx 8rpx 8rpx rgba(0, 0, 0, 0.35);
+  border-radius: 25rpx;
+  width: 120rpx;
+  height: 120rpx;
+}
+.acitivity-info {
+  font-size: small;
+  margin-left: 16rpx;
+  width: 500rpx;
+}
+.action {
+  display: flex;
+  flex-direction: row;
+}
+.action_button {
+  background-color: #aac8e2;
+  color: #fff;
+  border-radius: 16rpx;
+  width: 130rpx;
+  height: 50rpx;
+  text-align: center;
+  font-size: small;
+  padding-top: 4rpx;
+  height: 60rpx;
+  background-color: #aac8e2;
+  font-size: small;
+}
+.action_button[disabled] {
+  color: #fff !important;
+  background: #d5d5d7 !important;
+  border-color: #46b8da !important;
+}
+.header2 {
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: left;
+  margin-left: 5px;
+  font-size: large;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+}
+
+.tips {
+  padding-left: 25px;
+  font-size: small;
+  color: gray;
+  margin-top: 23px;
+}
+/* miniprogram/pages/kecheng/kecheng/kecheng.wxss */
+.kecheng-price {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  background: #fff;
+  height: 55px;
+}
+.price {
+  width: 25%;
+  text-align: center;
+  padding-top: 4px;
+  padding-bottom: 2px;
+  background: #4186bd;
+  color: #fff;
+  border-radius: 10px;
+  margin: auto auto;
+  opacity: 0.5;
+  height: 23px;
+  font-size: 14px;
+}
+.buy-or-play {
+  background: #4186bd;
+  width: 25%;
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  margin: auto auto;
+  padding-top: 4px;
+  padding-bottom: 2px;
+  opacity: 0.5;
+  height: 23px;
+  font-size: 14px;
+}
+
+.kecheng-image {
+  width: 100%;
+}
+.k-image {
+  height: 200px;
+  width: 100%;
+}
+.kecheng-header {
+  width: 100%;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.kecheng-desc {
+  font-size: 15px;
+  border-radius: 5px;
+  padding-top: 8px;
+  letter-spacing: 1px;
+}
+.header {
+  margin-top: 15px;
+}
+.buy-tip {
+  padding-top: 40px;
+  margin-bottom: 80px;
+  font-size: 13px;
+  color: gray;
+  text-align: center;
+  width: 100%;
+}
+
+.sp {
+  margin: 10px auto;
+  width: 98%;
+  height: 200px;
+}
+.top {
+  width: 100%;
+}
+.poster-image {
+  width: 100%;
+  height: 100%;
+}
+
+.mid {
+  width: 98%;
+}
+.article {
+  width: 100%;
+  margin: 14px auto;
+  height: 26px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.35);
+}
+.menu {
+  margin-top: 10px;
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+}
+.mA {
+  font-size: small;
+  width: 23%;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background: #fff;
+  margin: 2px 1%;
+  padding-top: 10px;
+}
+
+.m-image {
+  width: 100%;
+  height: 50px;
+}
+.header {
+  width: 90%;
+  margin: 15px auto;
+  text-align: left;
+  font-size: 28rpx;
+  font-weight: 320;
+  background: rgba(213, 210, 217, 0.3);
+  border-radius: 12px;
+  color: #565e73;
+  padding-left: 13px;
+  line-height: 27px;
+  padding-top: 5px;
+  letter-spacing: 0.7px;
+}
+.container {
+  font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
+}
+.kecheng-image {
+  width: 30%;
+  height: 120px;
+  padding-left: 10px;
+  padding-top: 10px;
+  border-radius: 5px;
+}
+.kecheng-title {
+  font-size: 14.2px;
+  text-align: left;
+  padding-left: 13px;
+  color: #565e73;
+  padding-top: 3px;
+}
+
+.kecheng-sc {
+  padding-top: 5px;
+  padding-left: 10px;
+  font-size: small;
+  font-weight: normal;
+  text-align: left;
+}
+.kecheng-info {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  color: #565e73;
+  background: rgba(80, 74, 86, 0.2);
+  height: 26px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(213, 210, 217, 0.2);
+}
+
+.towatch {
+  text-align: center;
+  background-color: #4186bd;
+  color: #fff;
+  border-radius: 10px;
+  margin-right: 10px;
+  width: 20%;
+  height: 30px;
+  margin-top: 10px;
+  padding-top: 3px;
+}
+
+.mulu {
+  font-size: 22px;
+  color: #504a56;
+  border-bottom: #565e73 solid 4px;
+  letter-spacing: 1.5px;
+  text-align: left;
+  width: auto;
+  padding-bottom: 7px;
+}
+.mid-title {
+  width: 90%;
+  text-align: left;
+  margin: 26px auto;
+}
+
+.mid {
+  width: 90%;
+  margin: 11px auto;
+}
+
+.buy-tip-text {
+  font-size: 13px;
+  color: gray;
+  text-align: center;
+  border-top: #565e73 solid 1px;
+  width: auto;
+}
+
+.blue {
+  background-color: #ea68a2;
+}
+
+.container {
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.ql-container {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow: auto;
+  padding: 10px 10px 20px 10px;
+  border: 1px solid #ececec;
+}
+
+.ql-active {
+  color: #22c704;
+}
+
+.iconfont {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.toolbar {
+  box-sizing: border-box;
+  padding: 0 10px;
+  height: 50px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ececec;
+  border-left: none;
+  border-right: none;
+  background-color: #fff;
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.k_name {
+  width: 60%;
+  margin-left: 10px;
+  text-align: center;
+}
+.button {
+  width: 20%;
+  margin-right: 10px;
+}

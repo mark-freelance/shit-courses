@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "mp-msg": "weui-miniprogram/msg/msg"
+  },
+  "navigationBarTitleText": "试卷分析"
+
+}

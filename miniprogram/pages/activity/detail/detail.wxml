@@ -1,0 +1,158 @@
+<!-- pages/activity/detail.wxml -->
+<view class="page">
+    <view class="main">
+        <view>
+            <swiper indicator-dots="true" indicator-color="rgba(0, 0, 0, .3)" indicator-active-color="#000000" autoplay="true" interval="5000" duration="500" circular="false" style='height:450rpx;'>
+                <block wx:for="{{activity.imageList}}" wx:key="_id">
+                    <swiper-item class="swiper-item">
+                        <image class="swiper-image" src="{{item}}" mode="widthFix" />
+                    </swiper-item>
+                </block>
+            </swiper>
+        </view>
+        <view class="activities" style="margin-top:15rpx;">
+            <view class="activity-item">
+                <view class="acitivity-icon">
+                    <image src="{{activity.icon}}" mode="scaleToFill" style="width:160rpx; height:160rpx;" />
+                </view>
+                <view class="acitivity-info">
+                    <view style="font-weight:bold">
+                        {{activity.name}}
+                        <mp-badge wx:if="{{activity.is_new}}" style="margin-left: 2rpx;" content="new" ext-class="blue" />
+                    </view>
+                    <view>{{activity.desc}}</view>
+                    <!-- <view>
+                        {{activity.timeShow}}
+                        <text decode="true">&nbsp;|&nbsp;</text>
+                        {{activity.locationShow}}
+                    </view>
+                    <view style="display:flex;flex-direction:row">
+                        <view style="flex:1;">￥{{activity.price}}/人</view>
+                        <view style="flex:1;text-align:right;">销量{{activity.saleCount}}</view>
+                    </view> -->
+                    <view class="action " style="margin-top:10rpx;">
+                        <button class="action_button" size="mini" type="primary" data-name="{{activity.name}}" data-price="{{activity.price}}" data-id="{{activity._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:20rpx;" bindtap="onBuy">
+                            购买
+                        </button>
+                        <button class="action_button" size="mini" type="primary" data-id="{{activity._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:80rpx;" bindtap="onSave">
+                            收藏
+                        </button>
+                        <button class="action_button" size="mini" type="primary" data-id="{{activity._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:80rpx;" open-type="share">
+                            分享
+                        </button>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="line"></view>
+        <mp-tabs tabs="{{tabs}}" activeTab="{{activeTab}}" swiperClass="weui-tabs-swiper" bindtabclick="onTabClick" bindchange="onChange" activeClass="tab-bar-title__selected" tab-class="tabclass">
+            <block wx:for="{{tabs}}" wx:key="title">
+                <view class="tab-content" slot="tab-content-{{index}}">
+                    <view wx:if="{{index == 1}}">
+                        <scroll-view class="kecheng-comment" scroll-y="true">
+                            <view class="comment-all" wx:key="_id" wx:for="{{activity.comments}}" wx:for-index="indexs" wx:for-item="items">
+                                <!-- 一级评论 -->
+                                <view class="comment1" wx:if="{{!items.is_delete}}">
+                                    <image class="kecheng-image" src="{{items.user.avatarUrl}}" mode="aspectFill"></image>
+                                    <view class="kecheng-info">
+                                        <view class="kecheng-title">
+                                            <view class="name" style="display:flex;color:#c0c0c0;">
+                                                {{items.user.nickName}}
+                                                <view style="margin-left:16rpx;">
+                                                    {{items.time}}
+                                                </view>
+                                            </view>
+                                        </view>
+                                        <view class="kecheng-desc">
+                                            <view style="">{{items.text}}</view>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                            <view class="scrollSpase" style="height:20rpx;"></view>
+                        </scroll-view>
+                        <view class="action  fixed_bottom">
+                            <input bindinput="onCommentInput" style="width:560rpx;height:60rpx;border-radius:20rpx;background-color:#f0f0f0;margin-left:40rpx;" value="{{commentInput}}" placeholder="请输入评论内容" placeholder-style="padding-top:2rpx;padding-left:8rpx;" />
+                            <button class="action_button" size="mini" type="primary" data-id="{{activity._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:20rpx;" bindtap="onComment">
+                                评论
+                            </button>
+                        </view>
+                    </view>
+                    <view wx:if="{{index == 2}}">
+                        <scroll-view class="kecheng-comment" scroll-y="true">
+                            <view class="comment-all" wx:key="_id" wx:for="{{activity.asks}}" wx:for-index="indexs" wx:for-item="items">
+                                <!-- 一级评论 -->
+                                <view class="comment1" wx:if="{{!items.is_delete}}">
+                                    <image class="kecheng-image" src="{{items.user.avatarUrl}}" mode="aspectFill"></image>
+                                    <view class="kecheng-info">
+                                        <view class="kecheng-title">
+                                            <view class="name" style="display:flex;color:#c0c0c0;">
+                                                {{items.user.nickName}}
+                                                <view style="margin-left:16rpx;">
+                                                    {{items.time}}
+                                                </view>
+                                            </view>
+                                        </view>
+                                        <view class="kecheng-desc">
+                                            <view style="">{{items.text}}</view>
+                                        </view>
+                                    </view>
+                                </view>
+                                <!-- 二级评论 -->
+                                <view wx:for="{{items.replies}}" wx:key="_id" class="comment2">
+                                    <view class="comment2-all" wx:if="{{item}}">
+                                        <image class="kecheng-image" src="{{item.user.avatarUrl}}" mode="aspectFill"></image>
+                                        <view class="kecheng-info">
+                                            <view class="kecheng-title">
+                                                <view class="name" style="display:flex;color:#c0c0c0;">
+                                                    {{item.user.nickName}}
+                                                    <view style="margin-left:16rpx;">
+                                                        {{item.time}}
+                                                    </view>
+                                                </view>
+                                            </view>
+                                            <view class="kecheng-desc">
+                                                <view style="">{{item.text}}</view>
+                                            </view>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                            <view class="scrollSpase" style="height:20rpx;"></view>
+                        </scroll-view>
+                        <view class="action  fixed_bottom">
+                            <input bindinput="onAskInput" style="width:560rpx;height:60rpx;border-radius:20rpx;background-color:#f0f0f0;margin-left:40rpx;" value="{{askInput}}" placeholder="请输入提问内容" placeholder-style="padding-top:2rpx;padding-left:8rpx;" />
+                            <button class="action_button" size="mini" type="primary" data-id="{{activity._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:20rpx;" bindtap="onAsk">
+                                提问
+                            </button>
+                        </view>
+                    </view>
+                    <view wx:if="{{index == 0}}">
+                        <scroll-view class="kecheng-comment2" scroll-y="true">
+                            <view class="timeindex-all">
+                                <view wx:key="_id" wx:for="{{activity.detail}}" class="time-item">
+                                    <view>
+                                        <image style="width:640rpx;" src="{{item.imageUrl}}" mode="widthFix" />
+                                    </view>
+                                    <view>{{item.text}}</view>
+                                </view>
+                            </view>
+                            <view class="scrollSpase" style="height:20rpx;"></view>
+                        </scroll-view>
+                        <!-- <view class="action   fixed_bottom">
+                            <button class="action_button" size="mini" type="primary" data-id="{{activity._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:40rpx;" bindtap="onSave">
+                                收藏
+                            </button>
+                            <button class="action_button" size="mini" type="primary" data-id="{{activity._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:200rpx;" bindtap="onBuy">
+                                购买
+                            </button>
+                            <button class="action_button" size="mini" type="primary" data-id="{{activity._id}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:200rpx;" open-type="share">
+                                分享
+                            </button>
+                        </view> -->
+                    </view>
+                </view>
+            </block>
+        </mp-tabs>
+    </view>
+</view>
