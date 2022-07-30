@@ -21,7 +21,7 @@
       <text>组织简介</text>
     </view>
   </view> -->
-  <view class="header" style="padding-bottom:15rpx;">
+  <view class="header" style="padding-bottom:15rpx; display:none;">
     <view class="header-text">本课程由天文奥林匹克竞赛国际赛金银牌选手研发。</view>
     <view class="header-text">本套课程适用于对天文知识有一定了解的中小学生。</view>
     <view class="header-text">课程共有13个模块，每个模块6-12节。</view>
