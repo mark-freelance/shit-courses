@@ -101,6 +101,12 @@
 }
 ```
 
+## 视频
+
+用于测试视频和音频的课程：主页选“星座里的英文词”，然后选课程“星座中的英文词儿”。
+
+应该只有视频，音频还啥都没整。
+
 ## 参考文档
 
 - [云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
