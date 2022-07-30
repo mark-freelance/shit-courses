@@ -18,6 +18,7 @@ Page({
     userInfo: {},
     kechengs: [],
     modules: [],  // todo: 傻子库存到了这里
+    module_groups: [], // 我又加了个groups
   },
 
   /**
@@ -168,14 +169,29 @@ Page({
     wx.showLoading({
       title: "加载模块中",
     });
-    db.collection("modules")
+    db.collection("module_groups")
+      .orderBy("show_order", "asc")
+      .get({
+        success: (res) => {
+          this.setData({
+            module_groups: res.data,
+          });
+          console.log('groups:')
+          console.log(this.data.module_groups)
+          setTimeout(() => {
+            wx.hideLoading();
+          }, 100);
+        },
+      });
+    db.collection("super_modules")
       .orderBy("show_order", "asc")
       .get({
         success: (res) => {
           this.setData({
             modules: res.data,
           });
-          console.log(this.data.modules);
+          console.log('modules')
+          console.log(this.data.modules)
           setTimeout(() => {
             wx.hideLoading();
           }, 100);

@@ -165,7 +165,8 @@ Page({
     wx.showLoading({
       title: "加载中",
     });
-    db.collection("modules")
+    //db.collection("modules")
+    db.collection("super_modules")
       .doc(mid)
       .get({
         success: (res) => {
