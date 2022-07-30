@@ -1,6 +1,6 @@
 // miniprogram/pages/kecheng/index/index.js
 const app = getApp();
-const db = wx.cloud.database();
+const db = wx.cloud.database();   // todo: 这里
 const config = require("../../../config.js");
 const versionControl = require("../../../version.js");
 Page({
@@ -17,7 +17,7 @@ Page({
     duration: 500,
     userInfo: {},
     kechengs: [],
-    modules: [],
+    modules: [],  // todo: 傻子库存到了这里
   },
 
   /**
@@ -28,6 +28,7 @@ Page({
     app.globalData.company = company;
   },
 
+  // todo: 这里调用的傻子库
   onLoad: function (options) {
     //获取公司名
     this.loadcompany(options.company);
@@ -162,6 +163,7 @@ Page({
     });
   },
 
+  // todo: 这里取傻子库
   getmodules: function () {
     wx.showLoading({
       title: "加载模块中",

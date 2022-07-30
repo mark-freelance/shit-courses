@@ -27,6 +27,8 @@
     <view class="header-text">课程共有13个模块，每个模块6-12节。</view>
     <view class="header-text">可以在课程讨论区提问，老师会回复相关问题。</view>
   </view>
+
+  <!--todo: 这个地方我复制粘贴了一份儿，它从傻子库抓的数据modules，应该找一下傻子库就行-->
   <view class="mid-title">
     <text class="mulu">天文高阶课程目录</text>
   </view>
@@ -47,4 +49,27 @@
       </view>
     </view>
   </view>
+
+  <view class="mid-title">
+    <text class="mulu">天文高阶课程目录</text>
+  </view>
+  <view class="mid">
+    <view class="article" wx:key="_id" wx:for="{{modules}}">
+      <view class="kecheng-info" style="background:{{item.bg_color}};" bindtap="tomodule" data-mid="{{item._id}}" wx:if="{{item.if_ok}}">
+        <view class="kecheng-title">{{item.module_name}}</view>
+        <mp-badge wx:if="{{item.if_new}}" style="margin-left: 15rpx;" content="new" ext-class="blue" />
+        <!-- <view class="kecheng-desc" bindtap="tomodule" data-mid="{{item._id}}">{{item.module_desc}}</view>
+          
+          <view class="banner">
+            <view bindtap="tomodule" class="towatch" data-mid="{{item._id}}">点击学习</view>
+            <view bindtap="toshuati" class="towatch" data-mid="{{item._id}}">知识检测</view>
+          </view> -->
+      </view>
+      <view class="kecheng-info" style="background:{{item.bg_color}};opacity:0.45;" wx:else>
+        <view class="kecheng-title" data-mid="{{item._id}}">{{item.module_name}}</view>
+      </view>
+    </view>
+  </view>
+
+
 </view>
