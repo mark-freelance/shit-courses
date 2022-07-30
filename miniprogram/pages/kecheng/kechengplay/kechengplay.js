@@ -44,6 +44,9 @@ Page({
       {
         title: "练习题",
       },
+      {
+        title: "相关推荐",
+      },
     ],
     activeTab: 0,
     pinglun: false,

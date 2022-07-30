@@ -6,8 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    if_buy: false,
-    is_free: false,
+    if_buy: false,  // todo: 已付费或兔费
+    is_free: false, // 这个字段真的有用吗
     kechengs: [],
     module: {},
     logged: false,
@@ -27,6 +27,8 @@ Page({
       url: "../shop/shop?mid=" + mid,
     });
   },
+
+  // todo: 在这里算（但是mid并没有用）
   getWatchType(mid, cid) {
     // debugger;
     const user = this.data.user;
@@ -95,6 +97,8 @@ Page({
         }
         return;
       }
+
+      // todo: 这个绝对是田！！！！！！在这里换个上帝type就畅通无阻了
       wx.navigateTo({
         url:
           "../kechengplay/kechengplay?kid=" +
@@ -230,6 +234,12 @@ Page({
         },
       });
   },
+
+  // todo (不算todo，就是看懂了给个注释)
+  // mid = module id
+  // cid = kid = kecheng (course?) id
+  // 这两个加载的时候就能读出来，然后传到getWatchType里计算权限type（前端校验肯定是田）
+  // 最后再把mid kid type全传到kechengplay.js里，只要把type换一下就解锁了
 
   onLoad: function (options) {
     this.setData({
