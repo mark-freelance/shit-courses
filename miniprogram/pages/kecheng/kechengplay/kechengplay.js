@@ -48,6 +48,7 @@ Page({
         title: "相关推荐",
       },
     ],
+    activityList: [],
     activeTab: 0,
     pinglun: false,
     logged: false,
@@ -78,6 +79,28 @@ Page({
     });
   },
 
+  loadActivities: function (aid_list) {
+    wx.showLoading({
+      title: "加载中",
+    });
+    db.collection("activity")
+      .where({
+        _id: db.command.in(aid_list)
+      })
+      .get({
+        success: (res) => {
+          this.setData({
+            activityList: res.data,
+          });
+          console.log(res.data);
+          wx.hideLoading();
+        },
+        fail: (res) => {
+          console.log(res);
+        },
+      });
+  },
+
   loadkecheng: function (kid) {
     wx.showLoading({
       title: "加载中",
@@ -89,9 +112,13 @@ Page({
           this.setData({
             kecheng: res.data,
           });
+          console.log(this.data.kecheng);
           wx.setNavigationBarTitle({
             title: res.data.kecheng_name,
           });
+
+          this.loadActivities(res.data.aid_list);
+
           wx.hideLoading();
           console.log(this.data.kecheng);
         },
@@ -123,6 +150,7 @@ Page({
     this.loadkecheng(options.kid);
     this.loadComment(options.kid);
     this.loadAsks(options.kid);
+
     if (options.type > 10) {
       if (options.type == 12) {
         this.loadshiting(1);
@@ -175,6 +203,16 @@ Page({
     this.videoContext = wx.createVideoContext("myVideo");
   },
 
+  onActivityDetail(e) {
+    let id = e.currentTarget.dataset.id;
+    let type = e.currentTarget.dataset.type;    // real/activity，传入real以后detail页面就不调用searchActivity云函数了
+    console.log(e);
+    console.log(id);
+    wx.navigateTo({
+      url: "../../activity/detail/detail?activity_id=" + id + "&type=" + type,
+    });
+  },
+
   /**
    * 生命周期函数--监听页面显示
    */
@@ -204,6 +242,104 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {},
+
+
+  // getUserInfo只能通过用户点击触发，所以要移出来
+  onClickBuy(e) {
+    let type = e.currentTarget.dataset.type;
+    let self = this;
+
+    if (app.globalData.user) {
+      // 实物商品需要写地址
+      if (type == 'real') {
+        wx.chooseAddress({
+          success (res) {
+            self.setData({address: res})
+            self.onBuy(e)
+          },
+    
+          fail (err) {console.log(err);}
+        })
+      } else {
+        this.onBuy(e);
+      }
+    } else {
+      this.getUserProfile();
+    }
+  },
+
+  onBuy(e) {
+    console.log(e);
+    if (app.globalData.user) {
+      
+      wx.showLoading({
+        title: "支付请求中",
+      });
+
+      let aid = e.currentTarget.dataset.id;
+      let savedCity = wx.getStorageSync("city");
+      let self = this;
+
+      // 默认值，有收货地址则更新
+      let arg_data = {
+          aid: aid,
+          body: e.currentTarget.dataset.name,
+          sid: "sub_class1",
+          amount: 1,
+          nickName: "小学生",
+          phone: 13810599490,
+          city: savedCity ? savedCity.name : "无",
+          createTime: new Date().getTime(),
+          //openid: app.globalData.openid,
+          price: e.target.dataset.price,
+      }
+
+      console.log(self);
+      let addr = self.data.address;
+      console.log(addr);
+
+      // 替换真实信息，传入pay2，存入数据库orders_activity
+      if (addr) {
+        arg_data.nickName = addr.userName;
+        arg_data.city = `${addr.provinceName} ${addr.cityName} ${addr.countyName} ${addr.streetName} ${addr.detailInfo} ${addr.postalCode} `;
+        arg_data.phone = `${addr.telNumber}`;
+      } else {
+        // noop
+      }
+
+      console.log(arg_data);
+
+      wx.cloud.callFunction({
+        name: "pay2",
+        data: arg_data,
+        success: (res) => {
+          wx.hideLoading();
+          console.log(res);
+          const payment = res.result.payment;
+          console.log(payment);
+          wx.requestPayment({
+            ...payment,
+            success(res) {
+              console.log("pay success", res);
+              wx.showLoading({
+                title: "支付成功，正在跳转",
+              });
+              setTimeout(() => {
+                wx.hideLoading();
+              }, 3000);
+              wx.navigateBack();
+            },
+            fail(err) {
+              console.error("pay fail", err);
+            },
+          });
+        },
+        fail: console.error,
+      });
+    } else {
+      this.getUserProfile();
+    }
+  },
 
   loadComment: function (kid) {
     wx.cloud.callFunction({
@@ -386,6 +522,7 @@ Page({
     wx.getUserProfile({
       desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
+        console.log(res);
         wx.cloud.callFunction({
           name: "add_user",
           data: {
@@ -416,6 +553,10 @@ Page({
         //   },
         // });
       },
+
+      fail: (err) => {
+        console.log(err);
+      }
     });
   },
 

@@ -369,3 +369,37 @@ page > view {
   width: 25%;
   text-align: center;
 }
+
+.activities {
+  margin-top: 100rpx;
+  color: #565e73;
+}
+.activity-item {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30rpx;
+}
+
+.acitivity-icon {
+  margin-left: 30rpx;
+  box-shadow: 8rpx 8rpx 8rpx rgba(0, 0, 0, 0.35);
+  border-radius: 25rpx;
+  width: 160rpx;
+  height: 160rpx;
+}
+.acitivity-info {
+  font-size: small;
+  margin-left: 16rpx;
+  width: 500rpx;
+}
+
+.action_button {
+  background-color: #aac8e2;
+  color: #fff;
+  border-radius: 16rpx;
+  width: 90rpx;
+  height: 50rpx;
+  text-align: center;
+  font-size: small;
+  padding-top: 12rpx;
+}

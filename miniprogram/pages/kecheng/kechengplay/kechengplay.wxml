@@ -116,18 +116,36 @@
           </scroll-view>
         </view>
 
-
-  <!--todo: 这个012是它原来有的 3是我复制粘贴的0 得把音频和货什么的弄上去-->
         <view wx:if="{{index == 3}}">
           <scroll-view class="kecheng-comment2" scroll-y="true">
-            <view class="timeindex-all">
-              <view wx:key="_id" wx:for="{{kecheng.time_index}}" class="time-item">
-                <view class="time_index" bindtap="jumpvideo" data-time="{{item}}">
-                  ● {{item.text}}
+            <view class="activities">
+              <view class="activity-item" wx:for="{{activityList}}" wx:key="_id" data-id="{{item._id}}" data-type="{{item.product_type === undefined ? 'activity' : item.product_type}}" bindtap="onActivityDetail">
+                <view class="acitivity-icon">
+                  <image src="{{item.icon}}" mode="scaleToFill" style="width:160rpx; height:160rpx;" />
+                </view>
+                <view class="acitivity-info">
+                  <view style="font-weight:bold">
+                    {{item.name}}
+                    <mp-badge wx:if="{{item.is_new}}" style="margin-left: 2rpx;" content="new" ext-class="blue" />
+                  </view>
+                  <view>{{item.desc}}</view>
+                  <view>{{item.price_text}}</view>
+                  <view style="display:flex;flex-direction:row">
+                    <view style="flex:1;">￥{{item.price}}/人</view>
+                    <view style="flex:1;text-align:right;">销量{{item.saleCount}}</view>
+                    <view style="flex:1;text-align:right;visibility:{{item.product_type!='display'}};">
+                    
+                      <button class="action_button" size="mini" type="primary" data-name="{{item.name}}" data-price="{{item.price}}" data-id="{{item._id}}" data-type="{{item.product_type}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:20rpx;" catchtap="onClickBuy">
+                            购买
+                        </button>
+                    
+                    
+                    </view>
+                    
+                  </view>
                 </view>
               </view>
             </view>
-            <view class="scrollSpase" style="height:20rpx;"></view>
           </scroll-view>
         </view>
       </view>

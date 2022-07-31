@@ -35,7 +35,17 @@ Page({
   onLoad: function (options) {
     console.log(util);
     let id = options.activity_id;
-    this.getDetail(id);
+
+    let type = options.type;
+
+    console.log(options);
+
+    if (type == "real" || type == "display") {
+      this.getDetailWithoutSearching(id);   // 是实物就直接显示
+    } else {
+      this.getDetail(id);
+    }
+
     //wx.hideTabBar({});
     if (!app.globalData.openid) {
       this.login();
@@ -101,6 +111,58 @@ Page({
     };
   },
   onTabClick(e) {},
+
+  getDetailWithoutSearching(id) {
+    let self = this;
+    console.log(id);
+    db.collection('activity')
+    .doc(id)
+    .get({
+      success(res) {
+        console.log(res);
+        let activity = res.data;
+        if (activity) {
+          let comments = activity.comments;
+          if (comments) {
+            for (let i = 0; i < comments.length; i++) {
+              let comment = comments[i];
+              comment.time = util.formatTimeV2(comment.time);
+              comment.user = comment.userList[0];
+            }
+          }
+          let asks = activity.asks;
+          if (asks) {
+            for (let i = 0; i < asks.length; i++) {
+              let ask = asks[i];
+              ask.time = util.formatTimeV2(ask.time);
+              ask.reply_time &&
+                (ask.reply_time = util.formatTimeV2(ask.reply_time));
+              ask.user = ask.userList[0];
+              ask.replies = [];
+              if (ask.reply_text && ask.reply_text.length > 0) {
+                ask.replies.push({
+                  user: ask.replyList[0],
+                  time: ask.reply_time,
+                  text: ask.reply_text,
+                });
+              }
+            }
+          }
+        }
+        self.setData({
+          activity: res.data,
+        });
+        wx.setNavigationBarTitle({
+          title: self.data.activity.name,
+        });
+      },
+      fail(res) {
+        console.log(res);
+      },
+    });
+  },
+
+
   getDetail(id) {
     let self = this;
     console.log(id);
