@@ -106,7 +106,9 @@ Page({
           "&mid=" +
           this.data.module._id +
           "&type=" +
-          type,
+          type +
+          "&is_audio=" +
+          this.data.module.is_audio,
       });
     }
     // if (this.data.logged == false) {

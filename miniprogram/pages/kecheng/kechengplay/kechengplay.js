@@ -34,27 +34,12 @@ Page({
     comments1: [],
     comments2: [],
     current_comment: "",
-    tabs: [
-      {
-        title: "索引",
-      },
-      {
-        title: "讨论",
-      },
-      {
-        title: "练习题",
-      },
-      {
-        title: "相关推荐",
-      },
-    ],
-    activityList: [],
     activeTab: 0,
     pinglun: false,
     logged: false,
     user: {},
     userList: [],
-    watchType: 12,
+    watchType: 12
   },
 
   onTabClick(e) {
@@ -133,6 +118,7 @@ Page({
    */
   onLoad: function (options) {
     console.log(options);
+    this.ac = wx.createInnerAudioContext(); // 音频
     this.setData({
       mid: options.mid,
       kid: options.kid,
@@ -146,6 +132,26 @@ Page({
     } else {
       this.getopeninfo();
     }
+
+    let tabs = [
+      {
+        title: "索引",
+      },
+      {
+        title: "讨论",
+      },
+      {
+        title: (options.is_audio == 'true') ? "词汇发音" : "练习题", // 如果is_audio是ture，就改title
+      },
+      {
+        title: "相关推荐",
+      },
+    ];
+
+    this.setData({
+      tabs: tabs,
+      is_audio: (options.is_audio == 'true')
+    })
 
     this.loadkecheng(options.kid);
     this.loadComment(options.kid);
@@ -243,7 +249,6 @@ Page({
    */
   onShareAppMessage: function () {},
 
-
   // getUserInfo只能通过用户点击触发，所以要移出来
   onClickBuy(e) {
     let type = e.currentTarget.dataset.type;
@@ -339,6 +344,15 @@ Page({
     } else {
       this.getUserProfile();
     }
+  },
+
+  // 播放音频
+  play_audio: function(e) {
+    this.ac.stop();  // 先把正在播放的停犊子了
+    this.ac.src = this.data.kecheng.audio_list[e.currentTarget.id].mediaUrl;
+    console.log(this.ac.src);
+    this.ac.play();
+    e.currentTarget
   },
 
   loadComment: function (kid) {
