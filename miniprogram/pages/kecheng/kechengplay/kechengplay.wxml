@@ -137,7 +137,6 @@
 
         <view wx:if="{{index == 3}}">
           <scroll-view class="kecheng-comment2" scroll-y="true">
-            <view class="activities">
               <view class="activity-item" wx:for="{{activityList}}" wx:key="_id" data-id="{{item._id}}" data-type="{{item.product_type === undefined ? 'activity' : item.product_type}}" bindtap="onActivityDetail">
                 <view class="acitivity-icon">
                   <image src="{{item.icon}}" mode="scaleToFill" style="width:160rpx; height:160rpx;" />
@@ -157,14 +156,10 @@
                       <button class="action_button" size="mini" type="primary" data-name="{{item.name}}" data-price="{{item.price}}" data-id="{{item._id}}" data-type="{{item.product_type}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:20rpx;" catchtap="onClickBuy">
                             购买
                         </button>
-                    
-                    
                     </view>
-                    
                   </view>
                 </view>
-              </view>
-            </view>
+              </view>           
           </scroll-view>
         </view>
       </view>
