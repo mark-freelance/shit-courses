@@ -118,7 +118,9 @@ Page({
    */
   onLoad: function (options) {
     console.log(options);
-    this.ac = wx.createInnerAudioContext(); // 音频
+
+
+
     this.setData({
       mid: options.mid,
       kid: options.kid,
@@ -168,6 +170,7 @@ Page({
     }
 
     const { platform, safeArea, model, screenHeight } = wx.getSystemInfoSync();
+
     let safeHeight;
     if (safeArea) {
       safeHeight = screenHeight - safeArea.bottom;
@@ -176,6 +179,15 @@ Page({
     }
     this._safeHeight = safeHeight;
     let isIOS = platform === "ios";
+
+    this.ac = wx.createInnerAudioContext(); // 音频
+
+    if (isIOS) {
+      wx.setInnerAudioOption({obeyMuteSwitch: false})
+    } else {
+      // noop
+    }
+
     this.setData({
       isIOS,
       safeHeight,
