@@ -153,7 +153,7 @@
                     <view style="flex:1;text-align:right;">销量{{item.saleCount}}</view>
                     <view style="flex:1;text-align:right;visibility:{{item.product_type!='display'}};">
                     
-                      <button class="action_button" size="mini" type="primary" data-name="{{item.name}}" data-price="{{item.price}}" data-id="{{item._id}}" data-type="{{item.product_type}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:20rpx;" catchtap="onClickBuy">
+                      <button wx:if="{{item.product_type != 'display'}}" class="action_button" size="mini" type="primary" data-name="{{item.name}}" data-price="{{item.price}}" data-id="{{item._id}}" data-type="{{item.product_type}}" style="padding-top:4rpx;height:60rpx;background-color: #aac8e2;font-size:small;margin-left:20rpx;" catchtap="onClickBuy">
                             购买
                         </button>
                     </view>

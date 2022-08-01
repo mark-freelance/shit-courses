@@ -30,6 +30,7 @@ Page({
 
   // todo: 在这里算（但是mid并没有用）
   getWatchType(mid, cid) {
+    console.log(this.data)
     // debugger;
     const user = this.data.user;
     if (user.isBanned) {
@@ -41,8 +42,18 @@ Page({
         let iDate = new Date(schoolUser.invalid_date).getTime();
         if (iDate < nDate) {
           return 2; //学校账户已过期
+        } else if (schoolUser.isTrialUser) {
+          if (this.data.module.new_release) {
+            return 15;  // 新课试听用户
+          } else {
+            return 5;   // 新用户不能听老课
+          }
         } else {
-          return 11; //学校账户未过期
+          if (this.data.module.new_release) {
+            return 4;   // 老用户不能听新课
+          } else {
+            return 11; //学校账户未过期
+          }
         }
       } else {
         if (!this.data.if_buy) {
@@ -345,6 +356,7 @@ Page({
           } else {
             sData.isSchoolUser = true;
             sData.invalid_date = res2.data[0].invalid_date;
+            sData.isTrialUser = res2.data[0].is_trial;
           }
           this.setData({
             schoolUser: sData,
@@ -425,8 +437,19 @@ Page({
             title: "学校账号已过期",
             icon: "none",
           });
+        } else if (type == 4) {
+          wx.showToast({
+            title: "新课程暂未解锁",
+            icon: "none",
+          });
+        } else if (type == 5) {
+          wx.showToast({
+            title: "老课程暂未开放",
+            icon: "none",
+          });
+        } else {
+          return;
         }
-        return;
       }
       wx.navigateTo({
         url:
