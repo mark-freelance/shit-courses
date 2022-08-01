@@ -20,7 +20,7 @@
                         {{activity.name}}
                         <mp-badge wx:if="{{activity.is_new}}" style="margin-left: 2rpx;" content="new" ext-class="blue" />
                     </view>
-                    <view>{{activity.desc}}</view>
+                    <view><rich-text nodes="{{activity.desc}}"></rich-text></view>
                     <!-- <view>
                         {{activity.timeShow}}
                         <text decode="true">&nbsp;|&nbsp;</text>
