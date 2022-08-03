@@ -119,8 +119,6 @@ Page({
   onLoad: function (options) {
     console.log(options);
 
-
-
     this.setData({
       mid: options.mid,
       kid: options.kid,
@@ -1098,7 +1096,9 @@ Page({
               "../kechengplay/kechengplay?kid=" +
               res.data[0]._id +
               "&mid=" +
-              res.data[0].mid,
+              res.data[0].mid +
+              "&is_audio=" +
+              this.data.is_audio,
           });
         },
         fail: (res) => {
@@ -1129,7 +1129,9 @@ Page({
               "../kechengplay/kechengplay?kid=" +
               res.data[0]._id +
               "&mid=" +
-              res.data[0].mid,
+              res.data[0].mid +
+              "&is_audio=" +
+              this.data.is_audio,
           });
         },
         fail: (res) => {
