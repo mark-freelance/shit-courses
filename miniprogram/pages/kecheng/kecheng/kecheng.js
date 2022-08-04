@@ -203,6 +203,7 @@ Page({
           wx.hideLoading();
         },
       });
+      
   },
 
   loadkecheng: function (mid) {

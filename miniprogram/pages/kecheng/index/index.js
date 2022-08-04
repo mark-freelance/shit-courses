@@ -169,6 +169,7 @@ Page({
     wx.showLoading({
       title: "加载模块中",
     });
+    
     db.collection("module_groups")
       .orderBy("show_order", "asc")
       .get({
@@ -178,11 +179,35 @@ Page({
           });
           console.log('groups:')
           console.log(this.data.module_groups)
+
+          var tencent_die_mother = this;
+          wx.cloud.callFunction({
+            // 云函数名称
+            name: 'get_db', 
+            // 传给云函数的参数
+            data: {
+              name:"super_modules"
+            },
+            success: function(res) {
+              console.log(res.result)  // 日你妈，这地方叫result不叫data
+              tencent_die_mother.setData({
+                modules: res.result,
+              });
+              console.log('modules')
+              console.log(tencent_die_mother.data.modules)
+              setTimeout(() => {
+                wx.hideLoading();
+              }, 100);
+            },
+            fail: console.error
+          })
           setTimeout(() => {
             wx.hideLoading();
           }, 100);
         },
       });
+
+    /*
     db.collection("super_modules")
       .orderBy("show_order", "asc")
       .get({
@@ -197,6 +222,7 @@ Page({
           }, 100);
         },
       });
+    */
   },
   showDot(index, count) {
     wx.setTabBarBadge({

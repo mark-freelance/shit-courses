@@ -232,7 +232,14 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {},
+  onShow: function () {
+     // 获取当前小程序的页面栈 
+     let pages = getCurrentPages(); 
+     // 数组中索引最大的页面--当前页面  
+     let currentPage = pages[pages.length-1]; 
+     // 打印出当前页面中的 options  
+     //this.onLoad(currentPage.options);  //todo：风怒，是田，但业
+  },
 
   /**
    * 生命周期函数--监听页面隐藏
