@@ -109,7 +109,7 @@
               <block wx:key="_id" wx:for="{{kecheng.audio_list}}" wx:for-index="i" class="time-item">
                 <view class="time_index" bindtap="" data-time="{{item}}">
                   <view style="display:flex;flex-direction:row">
-                    <view style="flex:6;align-items:flex-end;justify-content: flex-end;line-height: 35rpx;">●<text space="nbsp">  {{item.english}} {{item.chinese}} [{{item.phonetic}}]</text></view>
+                    <view style="flex:6;align-items:flex-end;justify-content: flex-end;line-height: 35rpx;">●<text space="nbsp">  {{item.english}} {{item.chinese}} {{item.phonetic}}</text></view>
                     <view style="flex:1;text-align:right;align-items:flex-end;justify-content: flex-end;visibility:{{item.product_type!='display'}};">
                       <image id="{{i}}" bindtap="play_audio" src="/images/audio_play.png" mode="scaleToFill" style="width:35rpx; height:35rpx;"></image>           
                     </view>
