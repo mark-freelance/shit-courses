@@ -18,8 +18,8 @@
                 {{item.name}}
                 <mp-badge wx:if="{{item.is_new}}" style="margin-left: 2rpx;" content="new" ext-class="blue" />
               </view>
-              <view>{{item.desc}}</view>
-              <view>
+              <view><rich-text nodes="{{item.desc}}"></rich-text></view>
+              <view wx:if="{{item.timeShow || item.locationShow}}">
                 {{item.timeShow}}
                 <text decode="true">&nbsp;|&nbsp;</text>
                 {{item.locationShow}}

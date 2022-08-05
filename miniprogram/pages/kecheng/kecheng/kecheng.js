@@ -35,47 +35,43 @@ Page({
     const user = this.data.user;
     if (user.isBanned) {
       return 1; //被禁用
-    } else if (user.identityType != "teacher") {
-      const schoolUser = this.data.schoolUser;
-      if (schoolUser.isSchoolUser) {
-        let nDate = new Date().getTime();
-        let iDate = new Date(schoolUser.invalid_date).getTime();
-        if (iDate < nDate) {
-          return 2; //学校账户已过期
-        } else if (schoolUser.isTrialUser) {
-          if (this.data.module.new_release) {
-            return 15;  // 新课试听用户
-          } else {
-            return 5;   // 新用户不能听老课
-          }
-        } else {
-          if (this.data.module.new_release) {
-            return 4;   // 老用户不能听新课
-          } else {
-            return 11; //学校账户未过期
-          }
-        }
-      } else {
+    } else if (user.identityType == 'teacher') {
+      return 14;
+    } else {
         if (!this.data.if_buy) {
           let exp_index = this.data.module.exp_index;
           let tryId = this.data.kechengs[exp_index - 1]._id;
-          // let tryId = wx.getStorageSync(mid);
-          //if (tryId) {
+
           if (tryId == cid) {
             return 12; //个人试看
           } else {
-            return 3; //个人未付费
+            const schoolUser = this.data.schoolUser;
+
+            if (schoolUser.isSchoolUser) {
+              let nDate = new Date().getTime();
+              let iDate = new Date(schoolUser.invalid_date).getTime();
+              if (iDate < nDate) {
+                return 2; //学校账户已过期
+              } else if (schoolUser.isTrialUser) {
+                if (this.data.module.new_release) {
+                  return 15;  // 新课试听用户
+                } else {
+                  return 5;   // 新用户不能听老课
+                }
+              } else {
+                if (this.data.module.new_release) {
+                  return 4;   // 老用户不能听新课
+                } else {
+                  return 11; //学校账户未过期
+                }
+              }
+            } else {
+              return 3; //个人未付费
+            }
           }
-          // } else {
-          //   wx.setStorageSync(mid, cid);
-          //   return 12; //个人试看
-          // }
         } else {
           return 13; //个人已付费
         }
-      }
-    } else {
-      return 14; //老师，管理员
     }
   },
   towatch: function (e) {
@@ -104,6 +100,16 @@ Page({
           wx.showToast({
             title: app.globalData.not_buy_text,
             icon: "none",
+          });
+        } else if (type == 4) {
+          wx.showToast({
+            title: "老用户不能听新课！",
+            icon: "none",
+          });
+        } else if (type == 3) {
+          wx.showToast({
+            title: app.globalData.not_buy_text,
+            icon: "新用户不能听老课！",
           });
         }
         return;

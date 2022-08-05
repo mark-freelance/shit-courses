@@ -16,7 +16,7 @@
             <view class="acitivity-info">
               <view class="module-name">{{item.module_class}}</view>
               <view class="module-name">{{item.abbr_name}}</view>
-              <view>{{item.desc}}</view>
+              <view><rich-text nodes="{{item.desc}}"></rich-text></view>
             </view>
           </view>
           <view class="action " style="margin-top:30rpx;margin-left:30rpx;margin-right:30rpx;">
