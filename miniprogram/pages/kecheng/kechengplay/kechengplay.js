@@ -1,6 +1,7 @@
 // miniprogram/pages/kecheng/kechengplay/kechengplay.js
 const app = getApp();
 const db = wx.cloud.database();
+const ac = wx.createInnerAudioContext(); // 音频
 
 Page({
   /**
@@ -178,12 +179,12 @@ Page({
     this._safeHeight = safeHeight;
     let isIOS = platform === "ios";
 
-    this.ac = wx.createInnerAudioContext(); // 音频
-
     if (isIOS) {
-      wx.setInnerAudioOption({obeyMuteSwitch: false})
+      wx.setInnerAudioOption({mixWithOther: true, obeyMuteSwitch: false})
+      console.log(platform);
+      console.log('set obeyMuteSwitch to false')
     } else {
-      // noop
+      console.log(platform);
     }
 
     this.setData({
@@ -365,11 +366,14 @@ Page({
 
   // 播放音频
   play_audio: function(e) {
-    this.ac.stop();  // 先把正在播放的停犊子了
-    this.ac.src = this.data.kecheng.audio_list[e.currentTarget.id].mediaUrl;
-    console.log(this.ac.src);
-    this.ac.play();
-    e.currentTarget
+    ac.stop();  // 先把正在播放的停犊子了
+    ac.src = this.data.kecheng.audio_list[e.currentTarget.id].mediaUrl;
+    console.log(ac.src);
+
+    //ac.play();
+    ac.onCanplay(() => ac.play());
+    // ac.play();
+    // e.currentTarget
   },
 
   loadComment: function (kid) {
