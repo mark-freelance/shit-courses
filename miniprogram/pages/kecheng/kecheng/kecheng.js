@@ -104,12 +104,12 @@ Page({
           });
         } else if (type == 4) {
           wx.showToast({
-            title: "老号无新课权限",
+            title: "购买后播放",
             icon: "error",
           });
         } else if (type == 5) {
           wx.showToast({
-            title: "新号无老课权限",
+            title: "购买后播放",
             icon: "error"
           });
         }
