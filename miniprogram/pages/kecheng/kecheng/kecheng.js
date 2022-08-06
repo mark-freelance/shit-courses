@@ -77,6 +77,7 @@ Page({
   towatch: function (e) {
     // this.data.user._openid = "o2EOC4kE4vlPgAU7COzKBm0G3pZ0";
     // debugger;
+    // console.log(this.data);
     if (this.data.logged == false || !this.data.user._openid) {
       this.getUserProfile();
     } else {
@@ -270,6 +271,7 @@ Page({
     this.loadmodule(options.mid);
     this.loadkecheng(options.mid);
     //setTimeout(this.loadorder, 1000, options.mid, app.globalData.openid);
+
     if (!app.globalData.openid) {
       this.login();
     } else if (!app.globalData.user) {
