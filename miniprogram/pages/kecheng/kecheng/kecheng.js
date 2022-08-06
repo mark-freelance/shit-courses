@@ -75,6 +75,7 @@ Page({
     }
   },
   towatch: function (e) {
+    // this.data.user._openid = "o2EOC4kE4vlPgAU7COzKBm0G3pZ0";
     // debugger;
     if (this.data.logged == false || !this.data.user._openid) {
       this.getUserProfile();
@@ -103,13 +104,13 @@ Page({
           });
         } else if (type == 4) {
           wx.showToast({
-            title: "老用户不能听新课！",
-            icon: "none",
+            title: "老号无新课权限",
+            icon: "error",
           });
-        } else if (type == 3) {
+        } else if (type == 5) {
           wx.showToast({
-            title: app.globalData.not_buy_text,
-            icon: "新用户不能听老课！",
+            title: "新号无老课权限",
+            icon: "error"
           });
         }
         return;
