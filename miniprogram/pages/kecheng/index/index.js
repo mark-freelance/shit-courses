@@ -38,6 +38,22 @@ Page({
     this.onGetOpenid();
     //获取课程
     this.getmodules();
+
+    /** 测试云函数 */
+    wx.cloud.callFunction({
+      name: "getVideoAddress",
+      data: {
+        kid: '6d85a2b962e9769814048dbf7e6514ad' // 我应该有权限获取这个kid的视频地址
+      },
+      success: (res) => {
+        console.log("野猪拉屎了！")
+        console.log(res)
+      },
+      fail: (err) => {
+        console.error("野猪拉屎失败！", err);
+      },
+    });
+    console.log("?")
   },
   //跳转
   tomodule: function (e) {
