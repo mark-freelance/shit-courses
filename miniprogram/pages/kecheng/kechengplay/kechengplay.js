@@ -1,8 +1,12 @@
 // miniprogram/pages/kecheng/kechengplay/kechengplay.js
 
+import {getLastElem} from "../../../utils/util";
+
 const app = getApp();
 const db = wx.cloud.database();
 const ac = wx.createInnerAudioContext(); // 音频
+
+const FUNC_SEND_NOTIFICATION = "sendNotification"
 
 Page({
 	/**
@@ -1141,31 +1145,23 @@ Page({
 		this.loadAsks(kid)
 		console.log("current asks:", this.data.asks1);
 		
-		const sendAskMessageResult = await wx.cloud.callFunction({
-			name: "sendAskMessage",
+		const {data: teachers} = await db.collection("users").where({
+			identityType: "teacher",
+			ownedModules: {"$elemMatch": {kid}}
+		}).get();
+		
+		const result = await Promise.all(teachers.map(async ({_openid}) => await wx.cloud.callFunction({
+			name: FUNC_SEND_NOTIFICATION,
 			data: {
-				mid,
-				kid,
+				msgTitle: '你好，你负责的客户有新的问题需要你回答。',
+				toUserOpenID: _openid,
+				title: getLastElem(this.data.kecheng.kecheng_name.split('.')),
 				path: "pages/kecheng/kechengplay/kechengplay?showAsk=true&mid=" + this.data.mid + "&kid=" + this.data.kecheng._id, // + "&type=" + this.data.watchType,
 			}
-		});
-		console.log({sendAskMessageResult})
+		})))
 		
-		// 成功发送后，询问要不要接收
+		console.log("send result: ", result)
 		console.log('巨业无比！')
-	},
-	
-	sendReplyMessage(param) {
-		wx.cloud.callFunction({
-			name: "sendReplyMessage",
-			data: param,
-			success: (res) => {
-				console.log("[云函数] [sendReplyMessage]", res);
-			},
-			fail: (err) => {
-				console.error("[云函数] [sendReplyMessage] 调用失败", err);
-			},
-		});
 	},
 	
 	getContent2: function () {
@@ -1199,21 +1195,27 @@ Page({
 						is_handled: false,
 						mid: this.data.mid,
 					},
-					success: (res) => {
+					success: async (res) => {
 						this.setData({
 							ask: false,
 							reply2: false,
 							// asks2: asks2,
 						});
 						this.loadAsks(this.data.kid);
-						this.sendReplyMessage({
-							mid: this.data.mid,
-							kid: this.data.kecheng._id,
-							ask1_id: this.data.ask1_id,
-							user_recv_id: this.data.user_recv_id,
-							path: "pages/kecheng/kechengplay/kechengplay?showAsk=true&mid=" + this.data.mid + "&kid=" + this.data.kecheng._id, // + "&type=" + this.data.watchType,
-						});
+						
+						const resReply = await wx.cloud.callFunction({
+							name: FUNC_SEND_NOTIFICATION,
+							data: {
+								msgTitle: '您好，您提问的问题有新的回复了。',
+								toUserOpenID: this.data.user_recv_id,
+								title: getLastElem(this.data.kecheng.kecheng_name.split('.')),
+								path: "pages/kecheng/kechengplay/kechengplay?showAsk=true&mid=" + this.data.mid + "&kid=" + this.data.kecheng._id, // + "&type=" + this.data.watchType,
+							}
+						})
+						console.log({resReply})
 					},
+					error: console.error,
+					
 				});
 				
 				//if (this.data.watchType == 14) {
@@ -1238,6 +1240,7 @@ Page({
 					var minute = now.getMinutes();//得到分钟数
 					//var second= now.getSeconds();//得到秒数
 					console.log(res.data._openid);
+					// todo: 这里是不是要取消？
 					//发订阅消息
 					wx.cloud.callFunction({
 						name: "send_template_msg",
