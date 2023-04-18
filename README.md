@@ -1,3 +1,8 @@
+
+## repo
+
+changed from 'git@github.com:jcq15/lianxian.git' to 'git@github.com:m-archive-commercial/shit-courses.git'
+
 ## 云傻子库
 
 若新建的数据库读不到数据，检查一下数据权限（在云开发控制台）。
