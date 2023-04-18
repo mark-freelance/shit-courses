@@ -36,7 +36,10 @@ function formatNumber(n) {
   return n[1] ? n : "0" + n;
 }
 
+const getLastElem = (s) => s[s.length-1]
+
 module.exports = {
-  formatTime: formatTime,
-  formatTimeV2: formatTimeV2,
+  formatTime,
+  formatTimeV2,
+  getLastElem,
 };

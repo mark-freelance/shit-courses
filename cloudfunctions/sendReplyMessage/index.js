@@ -13,7 +13,7 @@ exports.main = async (event, context) => {
   let path = event.path?event.path:'pages/kecheng/index/index';
 
   const db = cloud.database()
-  let kechengs =  await db.collection("kechengs").where({_id:kid}).limit(1).get();
+  let kechengs =  await db.collection("kechengs_safe").where({_id:kid}).limit(1).get();
   if(kechengs.data.length==0)
   {
     return

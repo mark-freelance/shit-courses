@@ -1,8 +1,8 @@
 // miniprogram/pages/kecheng/index/index.js
 const app = getApp();
-const db = wx.cloud.database();   // todo: 这里
-const config = require("../../../config.js");
-const versionControl = require("../../../version.js");
+const {cloud} = wx
+const db = cloud.database();   // todo: 这里
+
 Page({
 	/**
 	 * 页面的初始数据
