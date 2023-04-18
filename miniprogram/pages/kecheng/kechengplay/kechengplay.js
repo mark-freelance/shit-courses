@@ -206,6 +206,7 @@ Page({
 													video_url: video_url,
 												});
 												console.log("野猪拉屎了！");
+												console.log({video_url})
 											} else {
 												wx.showToast({
 													title: "你没有权限查看该课程！",
@@ -1240,7 +1241,8 @@ Page({
 					var minute = now.getMinutes();//得到分钟数
 					//var second= now.getSeconds();//得到秒数
 					console.log(res.data._openid);
-					// todo: 这里是不是要取消？
+					
+					// todo: service message 的 page href 无法访问
 					//发订阅消息
 					wx.cloud.callFunction({
 						name: "send_template_msg",
