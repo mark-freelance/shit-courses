@@ -163,6 +163,9 @@ Page({
       },
       success: (res) => {
         console.log("[云函数] [findasks]", res);
+        
+        if(!res.result) return; // suppress bug of `ask2 of null`
+        
         if (res.result.asks2 && res.result.asks2.length > 0) {
           let asks2 = res.result.asks2;
           this.setData({
