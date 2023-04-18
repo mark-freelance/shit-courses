@@ -50,7 +50,15 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {},
+  onShareAppMessage: function () {
+    const pages = getCurrentPages();
+    const currentPage = pages[pages.length - 1];
+    const url = `/${currentPage.route}`;
+    console.log(url);
+    return {
+      path: url + "?url=" + this.data.url,
+    }
+  },
 
   tap() {
     this.setData({

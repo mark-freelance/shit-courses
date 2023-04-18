@@ -34,7 +34,12 @@ exports.main = async (event, context) => {
         let ownedKid = ownedModules[j].kid;
         if(ownedKid==kid)
         {
-          sendList.push({openid:user._openid})               
+          sendList.push({openid:user._openid})
+          var date = new Date();
+          var year = date.getFullYear();
+          var month = date.getMonth() + 1;
+          var strDate = date.getDate();
+          var currentdate = year + "-" + month + "-" + strDate;
           try {
             const result = await cloud.openapi.uniformMessage.send({
                 "touser": user._openid,
@@ -55,7 +60,7 @@ exports.main = async (event, context) => {
                       "color": '#173177'
                     },
                     "keyword2": {
-                      "value": '2014年9月22日',
+                      "value": currentdate,
                       "color": '#173177'
                     },
                     "keyword3": {

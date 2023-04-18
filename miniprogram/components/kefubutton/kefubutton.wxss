@@ -1,0 +1,19 @@
+/* components/kefubutton.wxss */
+
+.circle[plain] {
+  display: flex;
+  margin-right: 40rpx;
+  right: 0;
+  position: fixed;
+  bottom: 15%;
+  padding: 0;
+  border: none;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 32rpx;
+}
+
+.image {
+  width: 64rpx;
+  height: 64rpx;
+}

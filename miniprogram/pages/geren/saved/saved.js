@@ -46,15 +46,23 @@ Page({
       content:'确定删除这个活动吗？',
       success:function(res){
         if(res.confirm){ //判断用户是否点击了确定
-          db.collection("saved_activity").where({ _openid: app.globalData.user._openid, aid: id,isDelete:false }).update({
+          /*
+          db.collection("saved_activity").where({ _openid: app.globalData.user._openid, aid: id}).update({
             data: { isDelete: true }, success: function (res) { 
               console.log("success");
               self.searchActivity();
           }})
+          */
+          db.collection("saved_activity").where({ _openid: app.globalData.user._openid, aid: id}).remove({
+            success: function(res){
+              self.searchActivity();
+            }
+          });
         }
       }
     })
   },
+  /*
   searchActivity() {
     let self = this;
     wx.cloud.callFunction({
@@ -74,6 +82,35 @@ Page({
         console.log(err);
       },
     });
+  },
+  */
+  searchActivity() {
+    let self = this;
+    db.collection("saved_activity")
+      .where({ _openid: app.globalData.openid})
+      .get({
+        success(res) {
+          let aid_list = Array();
+          for(var a in res.data){
+            aid_list.push(res.data[a].aid);
+          }
+          //console.log(aid_list);
+          db.collection("activity")
+            .where({_id:db.command.in(aid_list) })
+            .get({
+              success(res_act){
+                //console.log(res_act.data);
+                self.setData({ activityList: res_act.data });
+                if (res_act.data.length == 0) {
+                  self.setData({ tips: "没有收藏的活动" });
+                }
+              }
+            })
+        },
+        fail(err) {
+          console.log(err);
+        },
+      });
   },
   login() {
     // 调用云函数

@@ -40,12 +40,17 @@ Page({
     logged: false,
     user: {},
     userList: [],
-    watchType: 12
+    video_url: "",
+    // watchType: 12
   },
 
   onTabClick(e) {
-    console.log(this.data.watchType);
+    // console.log(this.data.watchType);
     const index = e.detail.index;
+    this.setData({
+      activeTab: index,
+    });
+    /*
     if (index == 1 && this.data.watchType == 12) {
       wx.showToast({
         title: app.globalData.vip_only,
@@ -56,6 +61,7 @@ Page({
         activeTab: index,
       });
     }
+    */
   },
 
   onChange(e) {
@@ -91,126 +97,398 @@ Page({
     wx.showLoading({
       title: "加载中",
     });
-    db.collection("kechengs")
+    db.collection("kechengs_safe")
       .doc(kid)
       .get({
         success: (res) => {
-          this.setData({
-            kecheng: res.data,
-          });
-          console.log(this.data.kecheng);
-          wx.setNavigationBarTitle({
-            title: res.data.kecheng_name,
-          });
+          /** 使用云函数获取课程地址 */
+          wx.cloud.callFunction({
+            name: "getVideoAddress",
+            data: {
+              kid: kid // 我应该有权限获取这个kid的视频地址
+            },
+            success: (res_url) => {
+              console.log("野猪上天了！")
+              console.log(res_url)
 
-          this.loadActivities(res.data.aid_list);
+              this.setData({
+                kecheng: res.data,
+                "kecheng.kecheng_dizhi": res_url.result.url,
+                "kecheng.lianxiti_url": res_url.result.lianxiti_url
+              });
+              console.log(this.data.kecheng);
+              wx.setNavigationBarTitle({
+                title: res.data.kecheng_name,
+              });
 
-          wx.hideLoading();
-          console.log(this.data.kecheng);
+              this.loadActivities(res.data.aid_list);
+
+              wx.hideLoading();
+              console.log(this.data.kecheng);
+            },
+            fail: (err) => {
+              console.error("野猪上天失败！", err);
+            },
+          });
         },
         fail: (res) => {
           console.log(res);
         },
       });
+
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options);
+    console.log(app.globalData.openid);
 
-    this.setData({
-      mid: options.mid,
-      kid: options.kid,
-      watchType: Number(options.type),
-    });
-    if (options.showAsk) {
-      this.setData({
-        activeTab: 1,
+    // 为屎山再添一坨屎
+    // 两坨
+    // 三坨
+    // 调用云函数
+    if(!app.globalData.openid){
+      wx.cloud.callFunction({
+        name: "login",
+        data: {},
+        success: (res) => {
+          console.log("[云函数] [login]  ", res.result);
+          app.globalData.openid = res.result.openid;
+          app.globalData.serverConfig = res.result.config;
+          this.getopeninfo();
+
+          db.collection("users")
+            .where({
+              _openid: app.globalData.openid,
+            })
+            .get({
+              success: (res) => {
+                if (res.data.length == 0) {
+                  this.setData({
+                    logged: false,
+                  });
+                } else {
+                  this.setData({
+                    logged: true,
+                    userList: res.data,
+                  });
+                  this.setData({
+                    mid: options.mid,
+                    kid: options.kid,
+                    is_audio: options.is_audio,
+                    video_url: options.video_url,
+                    // watchType: Number(options.type),
+                  });
+                  console.log(this.data.logged);
+                  // 这里重新鉴权
+                  if (this.data.logged == false) {
+                    app.getUserProfile();
+                  }
+                  // javascript我日你奶奶个孙子
+                  if(typeof options.video_url == "undefined" || options.video_url == null || options.video_url == ""){
+                    
+                    wx.cloud.callFunction({
+                      name: 'getVideoAddress',
+                      data: {
+                        kid: this.data.kid,
+                      },
+                      success: (res_url) => {
+                        console.log("我进来了")
+                        if (res_url.result) {
+                          let video_url = res_url.result.url;
+                          this.setData({
+                            video_url: video_url,
+                          });
+                          console.log("野猪拉屎了！");
+                        } else {
+                          wx.showToast({
+                            title: "你没有权限查看该课程！",
+                            icon: "none",
+                          });
+                        }
+                      },
+                      fail: (err) => {
+                        console.log("我吃屎了")
+                        wx.showToast({
+                          title: "获取视频地址失败！请尝试刷新！",
+                          icon: "none",
+                        });
+                        console.error("野猪拉屎失败！", err);
+                      },
+                    });
+                  } 
+                  
+                  if (options.showAsk) {
+                    this.setData({
+                      activeTab: 1,
+                    });
+                    this.getopeninfoWithReplyAction();
+                  } else {
+                    this.getopeninfo();
+                  }
+              
+                  let tabs = [{
+                      title: "索引",
+                    },
+                    {
+                      title: "讨论",
+                    },
+                    {
+                      title: (options.is_audio == 'true') ? "词汇发音" : "练习题", // 如果is_audio是ture，就改title
+                    },
+                    {
+                      title: "相关推荐",
+                    },
+                  ];
+              
+                  this.setData({
+                    tabs: tabs,
+                    is_audio: (options.is_audio == 'true')
+                  })
+              
+                  this.loadkecheng(options.kid);
+                  this.loadComment(options.kid);
+                  this.loadAsks(options.kid);
+              
+                  if (options.type > 10) {
+                    if (options.type == 12) {
+                      this.loadshiting(1);
+                    } else {
+                      this.loadshiting(0);
+                    }
+                  } else {
+                    return;
+                  }
+              
+                  const {
+                    platform,
+                    safeArea,
+                    model,
+                    screenHeight
+                  } = wx.getSystemInfoSync();
+              
+                  let safeHeight;
+                  if (safeArea) {
+                    safeHeight = screenHeight - safeArea.bottom;
+                  } else {
+                    safeHeight = 32;
+                  }
+                  this._safeHeight = safeHeight;
+                  let isIOS = platform === "ios";
+                  
+                  wx.setInnerAudioOption({
+                    obeyMuteSwitch: false
+                  })
+              
+                  if (isIOS) {
+                    wx.setInnerAudioOption({
+                      mixWithOther: true,
+                      obeyMuteSwitch: false
+                    })
+                    console.log(platform);
+                    console.log('set obeyMuteSwitch to false')
+                  } else {
+                    console.log(platform);
+                  }
+              
+                  this.setData({
+                    isIOS,
+                    safeHeight,
+                    toolBarHeight: isIOS ? safeHeight + 50 : 50,
+                  });
+                  const that = this;
+                  this.updatePosition(0);
+                  let keyboardHeight = 0;
+                  wx.onKeyboardHeightChange((res) => {
+                    if (res.height === keyboardHeight) {
+                      return;
+                    }
+                    const duration = res.height > 0 ? res.duration * 1000 : 0;
+                    keyboardHeight = res.height;
+                    setTimeout(() => {
+                      wx.pageScrollTo({
+                        scrollTop: 0,
+                        success() {
+                          that.updatePosition(keyboardHeight);
+                          that.editorCtx.scrollIntoView();
+                        },
+                      });
+                    }, duration);
+                  });
+                }
+              },
+            });
+        },
+        fail: (err) => {
+          console.error("[云函数] [login] 调用失败", err);
+        },
       });
-      this.getopeninfoWithReplyAction();
     } else {
-      this.getopeninfo();
+      db.collection("users")
+      .where({
+        _openid: app.globalData.openid,
+      })
+      .get({
+        success: (res) => {
+          if (res.data.length == 0) {
+            this.setData({
+              logged: false,
+            });
+          } else {
+            this.setData({
+              logged: true,
+              userList: res.data,
+            });
+            this.setData({
+              mid: options.mid,
+              kid: options.kid,
+              is_audio: options.is_audio,
+              video_url: options.video_url,
+              // watchType: Number(options.type),
+            });
+            console.log(this.data.logged);
+            // 这里重新鉴权
+            if (this.data.logged == false) {
+              app.getUserProfile();
+            }
+            // javascript我日你奶奶个孙子
+            if(typeof options.video_url == "undefined" || options.video_url == null || options.video_url == ""){
+              
+              wx.cloud.callFunction({
+                name: 'getVideoAddress',
+                data: {
+                  kid: this.data.kid,
+                },
+                success: (res_url) => {
+                  console.log("我进来了")
+                  if (res_url.result) {
+                    let video_url = res_url.result.url;
+                    this.setData({
+                      video_url: video_url,
+                    });
+                    console.log("野猪拉屎了！");
+                  } else {
+                    wx.showToast({
+                      title: "你没有权限查看该课程！",
+                      icon: "none",
+                    });
+                  }
+                },
+                fail: (err) => {
+                  console.log("我吃屎了")
+                  wx.showToast({
+                    title: "获取视频地址失败！请尝试刷新！",
+                    icon: "none",
+                  });
+                  console.error("野猪拉屎失败！", err);
+                },
+              });
+            } 
+            
+            if (options.showAsk) {
+              this.setData({
+                activeTab: 1,
+              });
+              this.getopeninfoWithReplyAction();
+            } else {
+              this.getopeninfo();
+            }
+        
+            let tabs = [{
+                title: "索引",
+              },
+              {
+                title: "讨论",
+              },
+              {
+                title: (options.is_audio == 'true') ? "词汇发音" : "练习题", // 如果is_audio是ture，就改title
+              },
+              {
+                title: "相关推荐",
+              },
+            ];
+        
+            this.setData({
+              tabs: tabs,
+              is_audio: (options.is_audio == 'true')
+            })
+        
+            this.loadkecheng(options.kid);
+            this.loadComment(options.kid);
+            this.loadAsks(options.kid);
+        
+            if (options.type > 10) {
+              if (options.type == 12) {
+                this.loadshiting(1);
+              } else {
+                this.loadshiting(0);
+              }
+            } else {
+              return;
+            }
+        
+            const {
+              platform,
+              safeArea,
+              model,
+              screenHeight
+            } = wx.getSystemInfoSync();
+        
+            let safeHeight;
+            if (safeArea) {
+              safeHeight = screenHeight - safeArea.bottom;
+            } else {
+              safeHeight = 32;
+            }
+            this._safeHeight = safeHeight;
+            let isIOS = platform === "ios";
+            
+            wx.setInnerAudioOption({
+              obeyMuteSwitch: false
+            })
+        
+            if (isIOS) {
+              wx.setInnerAudioOption({
+                mixWithOther: true,
+                obeyMuteSwitch: false
+              })
+              console.log(platform);
+              console.log('set obeyMuteSwitch to false')
+            } else {
+              console.log(platform);
+            }
+        
+            this.setData({
+              isIOS,
+              safeHeight,
+              toolBarHeight: isIOS ? safeHeight + 50 : 50,
+            });
+            const that = this;
+            this.updatePosition(0);
+            let keyboardHeight = 0;
+            wx.onKeyboardHeightChange((res) => {
+              if (res.height === keyboardHeight) {
+                return;
+              }
+              const duration = res.height > 0 ? res.duration * 1000 : 0;
+              keyboardHeight = res.height;
+              setTimeout(() => {
+                wx.pageScrollTo({
+                  scrollTop: 0,
+                  success() {
+                    that.updatePosition(keyboardHeight);
+                    that.editorCtx.scrollIntoView();
+                  },
+                });
+              }, duration);
+            });
+          }
+        },
+      });
     }
-
-    let tabs = [
-      {
-        title: "索引",
-      },
-      {
-        title: "讨论",
-      },
-      {
-        title: (options.is_audio == 'true') ? "词汇发音" : "练习题", // 如果is_audio是ture，就改title
-      },
-      {
-        title: "相关推荐",
-      },
-    ];
-
-    this.setData({
-      tabs: tabs,
-      is_audio: (options.is_audio == 'true')
-    })
-
-    this.loadkecheng(options.kid);
-    this.loadComment(options.kid);
-    this.loadAsks(options.kid);
-
-    if (options.type > 10) {
-      if (options.type == 12) {
-        this.loadshiting(1);
-      } else {
-        this.loadshiting(0);
-      }
-    } else {
-      return;
-    }
-
-    const { platform, safeArea, model, screenHeight } = wx.getSystemInfoSync();
-
-    let safeHeight;
-    if (safeArea) {
-      safeHeight = screenHeight - safeArea.bottom;
-    } else {
-      safeHeight = 32;
-    }
-    this._safeHeight = safeHeight;
-    let isIOS = platform === "ios";
-
-    if (isIOS) {
-      wx.setInnerAudioOption({mixWithOther: true, obeyMuteSwitch: false})
-      console.log(platform);
-      console.log('set obeyMuteSwitch to false')
-    } else {
-      console.log(platform);
-    }
-
-    this.setData({
-      isIOS,
-      safeHeight,
-      toolBarHeight: isIOS ? safeHeight + 50 : 50,
-    });
-    const that = this;
-    this.updatePosition(0);
-    let keyboardHeight = 0;
-    wx.onKeyboardHeightChange((res) => {
-      if (res.height === keyboardHeight) {
-        return;
-      }
-      const duration = res.height > 0 ? res.duration * 1000 : 0;
-      keyboardHeight = res.height;
-      setTimeout(() => {
-        wx.pageScrollTo({
-          scrollTop: 0,
-          success() {
-            that.updatePosition(keyboardHeight);
-            that.editorCtx.scrollIntoView();
-          },
-        });
-      }, duration);
-    });
+    
   },
 
   /**
@@ -222,7 +500,7 @@ Page({
 
   onActivityDetail(e) {
     let id = e.currentTarget.dataset.id;
-    let type = e.currentTarget.dataset.type;    // real/activity，传入real以后detail页面就不调用searchActivity云函数了
+    let type = e.currentTarget.dataset.type; // real/activity，传入real以后detail页面就不调用searchActivity云函数了
     console.log(e);
     console.log(id);
     wx.navigateTo({
@@ -234,12 +512,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-     // 获取当前小程序的页面栈 
-     let pages = getCurrentPages(); 
-     // 数组中索引最大的页面--当前页面  
-     let currentPage = pages[pages.length-1]; 
-     // 打印出当前页面中的 options  
-     //this.onLoad(currentPage.options);  //todo：风怒，是田，但业
+    // 获取当前小程序的页面栈 
+    let pages = getCurrentPages();
+    // 数组中索引最大的页面--当前页面  
+    let currentPage = pages[pages.length - 1];
+    // 打印出当前页面中的 options  
+    //this.onLoad(currentPage.options);  //todo：风怒，是田，但业
   },
 
   /**
@@ -265,7 +543,20 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {},
+  onShareAppMessage: function () {
+    const pages = getCurrentPages();
+    const currentPage = pages[pages.length - 1];
+    let url = `/${currentPage.route}`;
+
+    url = url + "?kid=" + this.data.kid +
+                "&mid=" + this.data.mid +
+                "&is_audio=" + this.data.is_audio +
+                "&video_url=";
+    console.log(url);
+    return {
+      path: url
+    }
+  },
 
   // getUserInfo只能通过用户点击触发，所以要移出来
   onClickBuy(e) {
@@ -276,25 +567,29 @@ Page({
       // 实物商品需要写地址
       if (type == 'real') {
         wx.chooseAddress({
-          success (res) {
-            self.setData({address: res})
+          success(res) {
+            self.setData({
+              address: res
+            })
             self.onBuy(e)
           },
-    
-          fail (err) {console.log(err);}
+
+          fail(err) {
+            console.log(err);
+          }
         })
       } else {
         this.onBuy(e);
       }
     } else {
-      this.getUserProfile();
+      app.getUserProfile();
     }
   },
 
   onBuy(e) {
     console.log(e);
     if (app.globalData.user) {
-      
+
       wx.showLoading({
         title: "支付请求中",
       });
@@ -305,16 +600,16 @@ Page({
 
       // 默认值，有收货地址则更新
       let arg_data = {
-          aid: aid,
-          body: e.currentTarget.dataset.name,
-          sid: "sub_class1",
-          amount: 1,
-          nickName: "小学生",
-          phone: 13810599490,
-          city: savedCity ? savedCity.name : "无",
-          createTime: new Date().getTime(),
-          //openid: app.globalData.openid,
-          price: e.target.dataset.price,
+        aid: aid,
+        body: e.currentTarget.dataset.name,
+        sid: "sub_class1",
+        amount: 1,
+        nickName: "小学生",
+        phone: 13810599490,
+        city: savedCity ? savedCity.name : "无",
+        createTime: new Date().getTime(),
+        //openid: app.globalData.openid,
+        price: e.target.dataset.price,
       }
 
       console.log(self);
@@ -360,20 +655,27 @@ Page({
         fail: console.error,
       });
     } else {
-      this.getUserProfile();
+      app.getUserProfile();
     }
   },
 
   // 播放音频
-  play_audio: function(e) {
-    ac.stop();  // 先把正在播放的停犊子了
-    ac.src = this.data.kecheng.audio_list[e.currentTarget.id].mediaUrl;
-    console.log(ac.src);
+  play_audio: function (e) {
+    ac.stop(); // 先把正在播放的停犊子了
+    ac.src = 'cloud://cloud1-0gycvki2e3212ab3.636c-cloud1-0gycvki2e3212ab3-1305395037/audios/constellation/tian.m4a';  // 田src
+    ac.onCanplay(() => {
+      console.log('can can need!');
+      ac.play();
 
-    //ac.play();
-    ac.onCanplay(() => ac.play());
-    // ac.play();
-    // e.currentTarget
+      ac.src = this.data.kecheng.audio_list[e.currentTarget.id].mediaUrl;
+      console.log(ac.src);
+      ac.onCanplay(() => {
+        console.log('can can need!');
+        ac.play();
+      });
+      // ac.play();
+      // e.currentTarget
+    });
   },
 
   loadComment: function (kid) {
@@ -400,7 +702,7 @@ Page({
   toask: function () {
     //授权登陆
     if (this.data.logged == false) {
-      this.getUserProfile();
+      app.getUserProfile();
     } else {
       this.setData({
         ask: true,
@@ -411,7 +713,7 @@ Page({
   tocomment: function () {
     //授权登陆
     if (this.data.logged == false) {
-      this.getUserProfile();
+      app.getUserProfile();
     } else {
       this.setData({
         pinglun: true,
@@ -423,7 +725,7 @@ Page({
     console.log(e);
     //授权登陆
     if (this.data.logged == false) {
-      this.getUserProfile();
+      app.getUserProfile();
     } else {
       this.setData({
         reply: true,
@@ -439,7 +741,7 @@ Page({
     console.log(e);
     //授权登陆
     if (this.data.logged == false) {
-      this.getUserProfile();
+      app.getUserProfile();
     } else {
       this.setData({
         ask: true,
@@ -554,6 +856,8 @@ Page({
   getUserProfile() {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
     // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+    
+    /*
     wx.getUserProfile({
       desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
@@ -593,6 +897,7 @@ Page({
         console.log(err);
       }
     });
+    */
   },
 
   getopeninfo() {
@@ -672,11 +977,14 @@ Page({
 
   updatePosition(keyboardHeight) {
     const toolbarHeight = 50;
-    const { windowHeight, platform } = wx.getSystemInfoSync();
+    const {
+      windowHeight,
+      platform
+    } = wx.getSystemInfoSync();
     let editorHeight =
-      keyboardHeight > 0
-        ? windowHeight - keyboardHeight - toolbarHeight
-        : windowHeight;
+      keyboardHeight > 0 ?
+      windowHeight - keyboardHeight - toolbarHeight :
+      windowHeight;
     if (keyboardHeight === 0) {
       this.setData({
         editorHeight,
@@ -695,7 +1003,10 @@ Page({
   },
   calNavigationBarAndStatusBar() {
     const systemInfo = wx.getSystemInfoSync();
-    const { statusBarHeight, platform } = systemInfo;
+    const {
+      statusBarHeight,
+      platform
+    } = systemInfo;
     const isIOS = platform === "ios";
     const navigationBarHeight = isIOS ? 44 : 48;
     return statusBarHeight + navigationBarHeight;
@@ -713,14 +1024,19 @@ Page({
     this.editorCtx.blur();
   },
   format(e) {
-    let { name, value } = e.target.dataset;
+    let {
+      name,
+      value
+    } = e.target.dataset;
     if (!name) return;
     // console.log('format', name, value)
     this.editorCtx.format(name, value);
   },
   onStatusChange(e) {
     const formats = e.detail;
-    this.setData({ formats });
+    this.setData({
+      formats
+    });
   },
   insertDivider() {
     this.editorCtx.insertDivider({
@@ -758,8 +1074,7 @@ Page({
       count: 1,
       success: function (res) {
         wx.cloud.uploadFile({
-          cloudPath:
-            "img/" +
+          cloudPath: "img/" +
             new Date().getTime() +
             "-" +
             Math.floor(Math.random() * 1000) +
@@ -793,6 +1108,13 @@ Page({
 
   getContent: function () {
     const that = this;
+    console.log(this.data.asks1);
+    wx.requestSubscribeMessage({
+      tmplIds: ['kpg44pswUwCyF2aNaZXgljrznbSpJO9MeODqFfdMBDQ'],
+      success (res) {
+        console.log('巨业无比！');
+      }
+    });
     that.editorCtx.getContents({
       success: (res) => {
         console.log(res.delta);
@@ -825,7 +1147,7 @@ Page({
             this.sendAskMessage({
               mid: this.data.mid,
               kid: this.data.kecheng._id,
-              path: "pages/kecheng/kechengplay/kechengplay?showAsk=true&mid="+this.data.mid+"&kid="+this.data.kecheng._id+"&type="+this.data.watchType,
+              path: "pages/kecheng/kechengplay/kechengplay?showAsk=true&mid=" + this.data.mid + "&kid=" + this.data.kecheng._id, // + "&type=" + this.data.watchType,
             });
           },
         });
@@ -875,6 +1197,7 @@ Page({
         //   ask1_id: this.data.ask1_id,
         //   love: 0,
         // });
+        
         db.collection("asks2").add({
           data: {
             ask1_id: this.data.ask1_id,
@@ -900,7 +1223,7 @@ Page({
               kid: this.data.kecheng._id,
               ask1_id: this.data.ask1_id,
               user_recv_id: this.data.user_recv_id,
-              path: "pages/kecheng/kechengplay/kechengplay?showAsk=true&mid="+this.data.mid+"&kid="+this.data.kecheng._id+"&type="+this.data.watchType,
+              path: "pages/kecheng/kechengplay/kechengplay?showAsk=true&mid=" + this.data.mid + "&kid=" + this.data.kecheng._id, // + "&type=" + this.data.watchType,
             });
           },
         });
@@ -909,7 +1232,42 @@ Page({
         db.collection("asks1")
           .doc(this.data.ask1_id)
           .update({
-            data: { is_handled: true },
+            data: {
+              is_handled: true
+            },
+          });
+        db.collection("asks1")
+          .doc(this.data.ask1_id)
+          .get()
+          .then(res => {
+            console.log(res.data._openid);
+            var now = new Date();
+            var year = now.getFullYear(); //得到年份
+            var month = now.getMonth()+1;//得到月份
+            var date = now.getDate();//得到日期
+            // var day = now.getDay();//得到周几
+            var hour= now.getHours();//得到小时数
+            var minute= now.getMinutes();//得到分钟数
+            //var second= now.getSeconds();//得到秒数
+            console.log(res.data._openid);
+            //发订阅消息
+            wx.cloud.callFunction({
+              name: "send_template_msg",
+              data: {
+                kecheng_name: that.data.kecheng.kecheng_name,
+                user_name: this.data.user_recv_name,
+                time: year + '-' + month + '-' + date + ' ' + hour + ':' + minute,
+                touser: res.data._openid
+              },
+              //data: param,
+              success: (res) => {
+                console.log("[云函数] [send_template_msg]", res);
+              },
+              fail: (err) => {
+                console.error("[云函数] [send_template_msg] 调用失败", err);
+              },
+            });
+            console.log(res.data._openid);
           });
         //}
 
@@ -1087,29 +1445,48 @@ Page({
   },
 
   tobefore: function (e) {
-    if (this.data.shiting == 1) {
-      return;
-    }
-
     if (this.data.kecheng.o_id - 1 < 1) {
       return;
     }
 
-    db.collection("kechengs")
+    // 试图获取url
+    db.collection("kechengs_safe")
       .where({
         mid: this.data.mid,
         o_id: this.data.kecheng.o_id - 1,
       })
       .get({
         success: (res) => {
-          wx.redirectTo({
-            url:
-              "../kechengplay/kechengplay?kid=" +
-              res.data[0]._id +
-              "&mid=" +
-              res.data[0].mid +
-              "&is_audio=" +
-              this.data.is_audio,
+          let kid = res.data[0]._id
+          wx.cloud.callFunction({
+            name: 'getVideoAddress',
+            data: {
+              kid: kid,
+            },
+            success: (res_url) => {
+              if (res_url.result) {
+                let video_url = res_url.result.url;
+                wx.redirectTo({
+                  url:
+                    "../kechengplay/kechengplay?kid=" +
+                    kid +
+                    "&mid=" +
+                    this.data.mid +
+                    "&is_audio=" +
+                    this.data.is_audio +
+                    "&video_url=" +
+                    video_url,
+                });
+              } else {
+                wx.showToast({
+                  title: "你没有权限查看该课程！",
+                  icon: "none",
+                });
+              }
+            },
+            fail: (err) => {
+              console.error("野猪拉屎失败！", err);
+            },
           });
         },
         fail: (res) => {
@@ -1119,30 +1496,44 @@ Page({
   },
 
   tonext: function (e) {
-    if (this.data.shiting == 1) {
-      return;
-    }
-
-    console.log(this.data.mid, this.data.kecheng.o_id);
-    db.collection("kechengs")
+    // 试图获取url
+    db.collection("kechengs_safe")
       .where({
         mid: this.data.mid,
         o_id: this.data.kecheng.o_id + 1,
       })
       .get({
         success: (res) => {
-          if (res.data.length == 0) {
-            return;
-          }
-          console.log(res.data);
-          wx.redirectTo({
-            url:
-              "../kechengplay/kechengplay?kid=" +
-              res.data[0]._id +
-              "&mid=" +
-              res.data[0].mid +
-              "&is_audio=" +
-              this.data.is_audio,
+          let kid = res.data[0]._id
+          wx.cloud.callFunction({
+            name: 'getVideoAddress',
+            data: {
+              kid: kid,
+            },
+            success: (res_url) => {
+              if (res_url.result) {
+                let video_url = res_url.result.url;
+                wx.redirectTo({
+                  url:
+                    "../kechengplay/kechengplay?kid=" +
+                    kid +
+                    "&mid=" +
+                    this.data.mid +
+                    "&is_audio=" +
+                    this.data.is_audio +
+                    "&video_url=" +
+                    video_url,
+                });
+              } else {
+                wx.showToast({
+                  title: "你没有权限查看该课程！",
+                  icon: "none",
+                });
+              }
+            },
+            fail: (err) => {
+              console.error("野猪拉屎失败！", err);
+            },
           });
         },
         fail: (res) => {

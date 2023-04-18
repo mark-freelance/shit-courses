@@ -1,0 +1,4 @@
+<!--components/kefubutton.wxml-->
+<button plain='true' open-type="contact" class="circle">
+  <image mode='aspectFill' src='/images/kefu.png' class='image'></image>
+</button>

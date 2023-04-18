@@ -1,6 +1,7 @@
 <!-- miniprogram/pages/kecheng/index/index.wxml -->
 <view class="container">
   <view class="top">
+    <kefu></kefu>
     <image class="poster-image" src="cloud://cloud1-0gycvki2e3212ab3.636c-cloud1-0gycvki2e3212ab3-1305395037/3. WechatIMG3115-拍星的人-logo.jpg" mode="widthFix"></image>
   </view>
   <!-- <view class="menu">

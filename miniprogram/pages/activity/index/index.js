@@ -41,7 +41,7 @@ Page({
   onLoad: function (options) {
     // this.getLocation();
     let savedCity = wx.getStorageSync("city");
-    console.log(savedCity);
+    console.log({savedCity});
     if (savedCity) {
       this.setData({ city: JSON.parse(savedCity) });
     }
@@ -56,7 +56,7 @@ Page({
     let self = this;
     db.collection("tags").get({
       success: (res) => {
-        console.log(res);
+        console.log("got tags: ", res)
         let tags = res.data[0];
         for (let i = 0; i < tags.tag1.length; i++) {
           let item = tags.tag1[i];
@@ -80,9 +80,7 @@ Page({
         }
         self.setData({ tags: res.data[0] });
       },
-      fail: (err) => {
-        console.log(err);
-      },
+      fail: console.error
     });
   },
   getSwiperList() {
@@ -92,12 +90,10 @@ Page({
       .orderBy("show_order", "asc")
       .get({
         success: (res) => {
-          console.log(res);
+          console.log("got swipers: ", res)
           self.setData({ swiperList: res.data });
         },
-        fail: (err) => {
-          console.log(err);
-        },
+        fail: console.error,
       });
   },
   searchActivity() {
@@ -110,12 +106,10 @@ Page({
         city: self.data.city,
       },
       success(res) {
-        console.log(res);
+        console.log("got searchActivity: ", res)
         self.setData({ activityList: res.result.data });
       },
-      fail(err) {
-        console.log(err);
-      },
+      fail: console.error
     });
   },
   /**
@@ -127,9 +121,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log(citySelector);
+    console.log({citySelector});
     const selectedCity = citySelector.getCity();
-    console.log(selectedCity);
+    console.log({selectedCity});
     if (selectedCity) {
       this.saveCity(selectedCity);
     }
@@ -142,7 +136,7 @@ Page({
         }
       }
     }
-    console.log(this.data.address);
+    console.log("address: ", this.data.address)
   },
 
   /**

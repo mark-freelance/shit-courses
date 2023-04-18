@@ -1,6 +1,10 @@
 //app.js
 App({
   onLaunch: function () {
+    wx.setInnerAudioOption({
+      obeyMuteSwitch: false
+    })
+    
     if (!wx.cloud) {
       console.error("请使用 2.2.3 或以上的基础库以使用云能力");
     } else {
@@ -28,5 +32,47 @@ App({
       not_buy_text: "ios" == res.platform ? "您不是会员" : "未购",
       vip_only: "ios" == res.platform ? "您不是会员" : "付费用户可见",
     };
+  },
+
+  getUserProfile(e) {
+    // wx.getUserProfile完犊子啦！现在要用狗日的获取头像昵称功能！
+    wx.navigateTo({
+      url: '/pages/userProfile/userProfile',
+    })
+    /*
+    wx.getUserProfile({
+      desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        //this.setData({
+        //user: res.userInfo,
+        //hasUserInfo: true,
+        //avatarUrl: res.userInfo.avatarUrl,
+        //logged: true,
+        //});
+        // app.globalData.openid = res.userInfo.openid;
+        wx.cloud.callFunction({
+          name: "add_user",
+          data: {
+            nickName: res.userInfo.nickName,
+            avatarUrl: res.userInfo.avatarUrl,
+          },
+          success: (res) => {
+            console.log(res.result);
+            this.setData({
+              logged: true,
+              user: res.result.data[0],
+            });
+            app.globalData.user = res.result.data[0];
+          },
+          fail: (err) => {
+            console.error("[云函数] [add_user] 调用失败", err);
+          },
+        });
+      },
+      fail(error) {
+        console.log(error);
+      },
+    });
+    */
   },
 });

@@ -26,7 +26,8 @@
     "pages/geren/schoolorders/schoolorder",
     "pages/geren/bind/bind",
     "pages/geren/activity/activity",
-    "pages/geren/admin/admin"
+    "pages/geren/admin/admin",
+    "pages/userProfile/userProfile"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -86,5 +87,8 @@
   "requiredPrivateInfos": [
     "getLocation",
     "chooseAddress"
-  ]
+  ],
+  "usingComponents": {
+    "kefu": "/components/kefubutton/kefubutton"
+  }
 }

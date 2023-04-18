@@ -23,6 +23,9 @@ Page({
    */
   tobuy: function () {
     var mid = this.data.module._id;
+    if(!this.data.logged){
+      app.getUserProfile();
+    }
     wx.navigateTo({
       url: "../shop/shop?mid=" + mid,
     });
@@ -75,122 +78,50 @@ Page({
     }
   },
   towatch: function (e) {
-    // this.data.user._openid = "o2EOC4kE4vlPgAU7COzKBm0G3pZ0";
-    // debugger;
-    // console.log(this.data);
     if (this.data.logged == false || !this.data.user._openid) {
-      this.getUserProfile();
+      app.getUserProfile();
     } else {
+      // 直接调用云函数试图获取视频地址，有就把地址传给下一个页面儿，没有拉鸡儿倒
       var kid = e.currentTarget.dataset.kid;
-      let type = this.getWatchType(this.data.module._id, kid);
-      this.setData({
-        watchType: type,
-      });
-      console.log("watchType:" + type);
-      if (type < 10) {
-        if (type == 1) {
-          wx.showToast({
-            title: "已被禁，请联系管理员",
-            icon: "none",
-          });
-        } else if (type == 2) {
-          wx.showToast({
-            title: "学校账号已过期",
-            icon: "none",
-          });
-        } else if (type == 3) {
-          wx.showToast({
-            title: app.globalData.not_buy_text,
-            icon: "none",
-          });
-        } else if (type == 4) {
-          wx.showToast({
-            title: "购买后播放",
-            icon: "error",
-          });
-        } else if (type == 5) {
-          wx.showToast({
-            title: "购买后播放",
-            icon: "error"
-          });
-        }
-        return;
-      }
-
-      // todo: 这个绝对是田！！！！！！在这里换个上帝type就畅通无阻了
-      wx.navigateTo({
-        url:
-          "../kechengplay/kechengplay?kid=" +
-          kid +
-          "&mid=" +
-          this.data.module._id +
-          "&type=" +
-          type +
-          "&is_audio=" +
-          this.data.module.is_audio,
+      // 调用云函数
+      wx.cloud.callFunction({
+        name: 'getVideoAddress',
+        data: {
+          kid: kid,
+        },
+        success: (res_url) => {
+          console.log(kid)
+          if (res_url.result) {
+            let video_url = res_url.result.url;
+            wx.navigateTo({
+              url:
+                "../kechengplay/kechengplay?kid=" +
+                kid +
+                "&mid=" +
+                this.data.module._id +
+                "&is_audio=" +
+                this.data.module.is_audio +
+                "&video_url=" +
+                video_url,
+            });
+          } else {
+            wx.showToast({
+              title: "你没有权限查看该课程！",
+              icon: "none",
+            });
+          }
+        },
+        fail: (err) => {
+          console.error("野猪拉屎失败！", err);
+        },
       });
     }
-    // if (this.data.logged == false) {
-    //   wx.getUserProfile({
-    //     desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-    //     success: (res) => {
-    //       // this.setData({
-    //       //   user: res.userInfo,
-    //       //   hasUserInfo: true,
-    //       //   avatarUrl: res.userInfo.avatarUrl,
-    //       //   logged: true,
-    //       // });
-    //       wx.cloud.callFunction({
-    //         name: "add_user",
-    //         data: {
-    //           nickName: res.userInfo.nickName,
-    //           avatarUrl: res.userInfo.avatarUrl,
-    //         },
-    //         success: (res2) => {
-    //           // debugger;
-    //           this.setData({
-    //             user: res2.result.data[0],
-    //             hasUserInfo: true,
-    //             // avatarUrl: res2.userInfo.avatarUrl,
-    //             logged: true,
-    //           });
-    //           this.getSchoolUser();
-    //           wx.navigateTo({
-    //             url:
-    //               "../kechengplay/kechengplay?kid=" +
-    //               kid +
-    //               "&mid=" +
-    //               this.data.module._id +
-    //               "&type=" +
-    //               type,
-    //           });
-    //         },
-    //         fail: (err) => {
-    //           console.error("[云函数] [add_user] 调用失败", err);
-    //         },
-    //       });
-    //       // db.collection("users").add({
-    //       //   // data 字段表示需新增的 JSON 数据
-    //       //   data: {
-    //       //     nickName: res.userInfo.nickName,
-    //       //     avatarUrl: res.userInfo.avatarUrl,
-    //       //     identityType: "student",
-    //       //     isBanned: false,
-    //       //   },
-    //       //   success: function (res) {},
-    //       // });
-    //     },
-    //   });
-    // } else {
-
-    // }
   },
 
   loadmodule: function (mid) {
     wx.showLoading({
       title: "加载中",
     });
-    //db.collection("modules")
     db.collection("super_modules")
       .doc(mid)
       .get({
@@ -218,7 +149,7 @@ Page({
     wx.showLoading({
       title: "加载中",
     });
-    db.collection("kechengs")
+    db.collection("kechengs_safe")
       .where({
         mid: mid,
       })
@@ -416,7 +347,7 @@ Page({
 
   toshiting: function () {
     if (this.data.logged == false || !this.data.user._openid) {
-      this.getUserProfile();
+      app.getUserProfile();
     } else {
       // var kid = wx.getStorageSync(this.data.module._id);
       // console.log("try mid:" + this.data.module._id);
@@ -461,6 +392,7 @@ Page({
           return;
         }
       }
+      //直接放到全局变量里
       wx.navigateTo({
         url:
           "../kechengplay/kechengplay?kid=" +
@@ -520,7 +452,35 @@ Page({
 
   toshuati2: function (e) {
     var mname = this.data.module.module_name;
-
+    var mid = this.data.module._id;
+    // 检查是否有module的权限
+    // 直接调用云函数试图获取视频地址，有就把地址传给下一个页面儿，没有拉鸡儿倒
+    // 调用云函数
+    wx.cloud.callFunction({
+      name: 'checkShuatiPerm',
+      data: {
+        mid: mid,
+      },
+      success: (res) => {
+        console.log(res)
+        if (res.result) {
+          console.log("toshuati2");
+          console.log(e);
+          wx.navigateTo({
+            url: "../../tianwen/shuati/shuati?type=" + mname + "&order=1",
+          });
+        } else {
+          wx.showToast({
+            title: "你没有权限查看该课程！",
+            icon: "none",
+          });
+        }
+      },
+      fail: (err) => {
+        console.error("野猪拉屎失败！", err);
+      },
+    });
+    /*
     const user = this.data.user;
     if (user.isBanned) {
       wx.showToast({
@@ -556,5 +516,6 @@ Page({
     wx.navigateTo({
       url: "../../tianwen/shuati/shuati?type=" + mname + "&order=1",
     });
+    */
   },
 });

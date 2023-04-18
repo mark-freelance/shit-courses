@@ -39,21 +39,6 @@ Page({
     //获取课程
     this.getmodules();
 
-    /** 测试云函数 */
-    wx.cloud.callFunction({
-      name: "getVideoAddress",
-      data: {
-        kid: '6d85a2b962e9769814048dbf7e6514ad' // 我应该有权限获取这个kid的视频地址
-      },
-      success: (res) => {
-        console.log("野猪拉屎了！")
-        console.log(res)
-      },
-      fail: (err) => {
-        console.error("野猪拉屎失败！", err);
-      },
-    });
-    console.log("?")
   },
   //跳转
   tomodule: function (e) {
@@ -167,7 +152,7 @@ Page({
     wx.showLoading({
       title: "加载课程中",
     });
-    db.collection("kechengs").get({
+    db.collection("kechengs_safe").get({
       success: (res) => {
         this.setData({
           kechengs: res.data,
@@ -205,11 +190,11 @@ Page({
               name:"super_modules"
             },
             success: function(res) {
-              console.log(res.result)  // 日你妈，这地方叫result不叫data
+              console.log(res.result)  // 淦，这地方叫result不叫data
               tencent_die_mother.setData({
                 modules: res.result,
               });
-              console.log('modules')
+              // console.log('modules')
               console.log(tencent_die_mother.data.modules)
               setTimeout(() => {
                 wx.hideLoading();

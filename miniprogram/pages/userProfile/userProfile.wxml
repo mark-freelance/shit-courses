@@ -1,0 +1,8 @@
+<!--pages/userProfile.wxml-->
+<text>　</text>
+<text style="text-align: center;">请点击此处设置头像</text>
+<button class="avatar" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+  <image src="{{avatarUrl}}"></image>
+</button> 
+<input type="nickname" class="weui-input" bindinput='getInputValue' placeholder="请输入昵称儿"/>
+<button class="button" type="primary" bindtap="updateUser" hidden="{{hideSubmit}}">好了</button>

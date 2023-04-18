@@ -71,13 +71,13 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    db.collection('modules').doc(mid).get({
+    db.collection('super_modules').doc(mid).get({
       success: res =>{
         this.setData({
           module:res.data,
           body:"连线课程购买"
         })
-        
+        console.log(this.data.module)
         wx.hideLoading()
       }
     })

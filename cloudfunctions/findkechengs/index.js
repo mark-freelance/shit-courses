@@ -17,7 +17,7 @@ exports.main = async (event, context) => {
 	  let nDate = new Date().getTime()
 	  if(iDate>nDate)
 	  {
-      let result = await db.collection("modules").get()
+      let result = await db.collection("super_modules").get()
       let list=[]
       for(let i=0;i<result.data.length;i++)
       {
@@ -35,7 +35,7 @@ exports.main = async (event, context) => {
 		  //totalFee: 498
 		})                           
 		.lookup({
-		  from: 'modules',
+		  from: 'super_modules',
 		  localField: 'mid',
 		  foreignField: '_id',
 		  as: 'mlist',

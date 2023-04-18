@@ -6,7 +6,7 @@
 								<view>1.学校子账号与微信号绑定，认证后将不能更改</view>
 				</view>
 				<view wx:else>
-								<view>账号登录</view>
+								<view>学校账号登录</view>
 								<view style="margin-top:10px">说明：</view>
 								<view>1.账号与微信号绑定，认证后将不能更改</view>
 				</view>
@@ -32,6 +32,6 @@
 								<view class="tipp">{{tips}}</view>
 				</view>
 				<view class="buy-tip">
-								<text user-select="true" class="buy-tip-text">合作/疑问/加入我们，请联系 shijingsi@astroedu.link</text>
+								<text user-select="true" class="buy-tip-text">学校购买/加盟/商务事宜，请联系 微信 707166693</text>
 				</view>
 </view>

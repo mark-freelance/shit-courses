@@ -48,10 +48,22 @@ exports.main = async (event, context) => {
     const res2 = await db.collection('order_detail').add({
       data: attach
     })
+    
+    const _ = db.command
+    const res3 = await db.collection('users')
+      .where({
+        _openid: event.subOpenid,
+      })
+      .update({
+        data:{
+          m_clearance: _.push(event.nonceStr)
+        }
+      })
 
     return{
       res: res,
       res2 : res2,
+      res3 : res3,
       errcode: 0,
       errmsg: 'ok'
     }

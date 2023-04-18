@@ -1,8 +1,10 @@
 <!-- index.wxml -->
 <view class="container">
-  <!-- 用户 openid -->
+  <!-- 用户信息 -->
   <view class="userinfo">
-    <button class="userinfo-avatar" style="background-image: url({{user.avatarUrl}})" size="default"></button>
+    <button size="default">
+      <image class="userinfo-avatar" src="{{user.avatarUrl}}"></image>
+    </button>
     <view class="uploader-text">
       <text>{{user.nickName}}</text>
     </view>
@@ -67,7 +69,7 @@
     <view bindtap="school" open-type="navigate" class="uploader-text">
       <image style="width:25px;height:25px;padding-top:13px" src="./6.jpg" mode="aspectFit"></image>
       <view style="margin-left:20px;margin-bottom:5px" wx:if="{{canShowBuy}}">学校账号登录</view>
-      <view style="margin-left:20px;margin-bottom:5px" wx:else>账号登录</view>
+      <view style="margin-left:20px;margin-bottom:5px" wx:else>学校账号登录</view>
     </view>
   </view>
   <!-- <view class="uploader" wx:if="{{true}}">
@@ -83,6 +85,6 @@
     </view>
   </view> -->
   <view class="buy-tip" style="margin-top:30px">
-    <text user-select="true" class="buy-tip-text">合作/疑问/加入我们，请联系 shijingsi@astroedu.link</text>
+    <text user-select="true" class="buy-tip-text">学校购买/加盟/商务事宜，请联系 微信 707166693</text>
   </view>
 </view>

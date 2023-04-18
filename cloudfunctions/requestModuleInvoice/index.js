@@ -14,6 +14,13 @@ exports.main = async (event, context) => {
   }})
   let notify_res = await db.collection("config").limit(1).get();
   let notifyId = notify_res.data[0].admin_openid;
+
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var strDate = date.getDate();
+  var currentdate = year + "-" + month + "-" + strDate;
+
   try {
     const result = await cloud.openapi.uniformMessage.send({
         "touser": notifyId,
@@ -34,7 +41,7 @@ exports.main = async (event, context) => {
               "color": '#173177'
             },
             "keyword2": {
-              "value": '2014年9月22日',
+              "value": currentdate,
               "color": '#173177'
             },
             "keyword3": {

@@ -82,41 +82,8 @@ Page({
   },
 
   getUserProfile(e) {
-    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
-    // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-    wx.getUserProfile({
-      desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (res) => {
-        //this.setData({
-        //user: res.userInfo,
-        //hasUserInfo: true,
-        //avatarUrl: res.userInfo.avatarUrl,
-        //logged: true,
-        //});
-        // app.globalData.openid = res.userInfo.openid;
-        wx.cloud.callFunction({
-          name: "add_user",
-          data: {
-            nickName: res.userInfo.nickName,
-            avatarUrl: res.userInfo.avatarUrl,
-          },
-          success: (res) => {
-            console.log(res.result);
-            this.setData({
-              logged: true,
-              user: res.result.data[0],
-            });
-            app.globalData.user = res.result.data[0];
-          },
-          fail: (err) => {
-            console.error("[云函数] [add_user] 调用失败", err);
-          },
-        });
-      },
-      fail(error) {
-        console.log(error);
-      },
-    });
+    // wx.getUserProfile完犊子啦！现在要用狗日的获取头像昵称功能！
+    app.getUserProfile();
   },
 
   getopeninfo() {
@@ -131,6 +98,7 @@ Page({
               logged: false,
             });
           } else {
+            console.log(res.data[0])
             this.setData({
               logged: true,
               user: res.data[0],

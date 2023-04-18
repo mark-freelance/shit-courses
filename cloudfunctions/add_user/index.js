@@ -46,7 +46,10 @@ exports.main = async (event, context) => {
       _openid:wxContext.OPENID,
       unionid: wxContext.UNIONID,
       identityType:"student",
-      isBanned:false
+      isBanned:false,
+      g_clearance: [],
+      m_clearance: [],
+      k_clearance: []
     }})
     return await db.collection('users').where({_openid:wxContext.OPENID}).limit(999).get();
   

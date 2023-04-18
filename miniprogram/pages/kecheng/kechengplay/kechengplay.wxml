@@ -1,7 +1,7 @@
 <!-- miniprogram/pages/kecheng/kechengplay/kechengplay.wxml -->
 <view class="page">
   <view class="kecheng-video">
-    <video class="play-video" src="{{kecheng.kecheng_dizhi}}" id="myVideo"></video>
+    <video class="play-video" src="{{video_url}}" id="myVideo" autoplay="true"></video>
     <!-- <my-player appid="1305395037" fileid="8602268011094893216" playerid="first_player"></my-player> 
     <yz_video app-id="wx9e5eba73bf23a27a" shop-id="16719442" sourceFrom="{{2}}" open-id="oDpvq0LNzwhMGfiNRbq-NthY5oUo" custom-url="https://b.yzcdn.cn/public_files/2019/03/20/b124ce1df4a4c0d0c6b2253481155bf6.mp4"></yz_video> -->
   </view>
@@ -39,7 +39,7 @@
                   </view>
                   <view class="timeandlove">
                     <view class="time">{{items.create_time}}</view>
-                    <view class="zhankai">展开{{items.huifu}}条回复</view>
+                    <view class="zhankai">展开回复</view>
                     <view class="reply" bindtap="toreply2" data-cid="{{items._id}}" data-name="{{items.userList[0].nickName}}" data-recv_uid="{{items.userList[0]._openid}}">
                       <image src="./comment.png" style="width:16px;height:16px"></image>
                     </view>
@@ -182,19 +182,19 @@
 </view>
 <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
 <!-- miniprogram/pages/kecheng/editor/editor.wxml -->
-<view class="container" style="height:{{editorHeight}}px;" wx:if="{{ask}}">
-  <view class="title">
-    <button class="button" type="warn" size="mini" bindtap="back">返回</button>
-    <view class="k_name">写留言</view>
-    <button class="button" type="primary" disabled="{{cantsubmit}}" size="mini" bindtap="getContent" wx:if="{{!reply2}}">
-      提交
-    </button>
-    <button class="button" type="primary" disabled="{{cantsubmit}}" size="mini" bindtap="getContent2" wx:if="{{reply2}}">
-      回复
-    </button>
+  <view class="container" style="height:{{editorHeight}}px;" wx:if="{{ask}}">
+    <view class="title">
+      <button class="button" type="warn" size="mini" bindtap="back">返回</button>
+      <view class="k_name">写留言</view>
+      <button class="button" type="primary" disabled="{{cantsubmit}}" size="mini" bindtap="getContent" wx:if="{{!reply2}}">
+        提交
+      </button>
+      <button class="button" type="primary" disabled="{{cantsubmit}}" size="mini" bindtap="getContent2" wx:if="{{reply2}}">
+        回复
+      </button>
+    </view>
+    <editor id="editor" class="ql-container" placeholder="{{placeholder}}" bindstatuschange="onStatusChange" bindready="onEditorReady" bindinput="bindinput"></editor>
   </view>
-  <editor id="editor" class="ql-container" placeholder="{{placeholder}}" bindstatuschange="onStatusChange" bindready="onEditorReady" bindinput="bindinput"></editor>
-</view>
 <view class="toolbar" catchtouchend="format" hidden="{{false}}" style="bottom: {{isIOS ? keyboardHeight : 0}}px; height: {{toolBarHeight}}px; padding-bottom: {{isIOS ? safeHeight : 0}}px" wx:if="{{ask}}">
   <i class="iconfont icon-charutupian" catchtouchend="insertImage"></i>
   <i class="iconfont icon-format-header-2 {{formats.header === 2 ? 'ql-active' : ''}}" data-name="header" data-value="{{2}}"></i>
@@ -206,11 +206,11 @@
   <i class="iconfont icon-youxupailie {{formats.list === 'ordered' ? 'ql-active' : ''}}" data-name="list" data-value="ordered"></i>
   <i class="iconfont icon-wuxupailie {{formats.list === 'bullet' ? 'ql-active' : ''}}" data-name="list" data-value="bullet"></i>
 </view>
-<!-- <view class="container" style="height:{{editorHeight}}px;">
+<!--view class="container" style="height:{{editorHeight}}px;">
   <view style="display:flex;flex-direction:column;align-items: center;">
-    长按识别并关注公众号，获取留言提醒。
+    关注服务号，接收老师的回复提醒～
     <view>
       <image src="../../../images/qrcode.jpg" style="width:375rpx;" mode="aspectFit" />
     </view>
   </view>
-</view> -->
+</view-->

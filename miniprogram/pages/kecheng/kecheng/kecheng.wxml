@@ -1,5 +1,6 @@
 <!-- miniprogram/pages/kecheng/kecheng/kecheng.wxml -->
 <view class="page">
+  <kefu></kefu>
   <view class="header" style="padding-top:20rpx;">
     <view wx:for="{{module.module_suggestion}}" wx:key="_id">
       <text style="">{{item.text}}</text>
