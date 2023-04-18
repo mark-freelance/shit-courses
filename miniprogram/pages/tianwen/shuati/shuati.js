@@ -137,6 +137,7 @@ Page({
     });
     const db = wx.cloud.database();
     // 查询
+    console.log("finding questions: ", {type, order})
     db.collection("questions")
       .where({
         question_type: type,
@@ -158,7 +159,7 @@ Page({
       .orderBy("is_fill", "asc")
       .get({
         success: (res) => {
-          console.log(res);
+          console.log("got questions: ", res);
 
           this.setData({
             questionResult: res.data,
@@ -509,12 +510,12 @@ Page({
     }
 
     this.data.questionResult[index].question_options[row].checked = true;
-    console.log(this.data.answer_array);
+    console.log("answers: ", this.data.answer_array);
   },
 
   //收集填空题答案
   bindKeyInput: function (e) {
-    console.log(e);
+    console.log("bindKeyInput: ", e);
 
     let value = e.detail.value;
     // if (value.length) {
