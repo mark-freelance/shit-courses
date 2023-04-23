@@ -1,6 +1,7 @@
 // miniprogram/pages/kecheng/kechengplay/kechengplay.js
 
 import {getLastElem} from "../../../utils/util";
+import {asyncCheckLessonPrivilege} from "../../../utils/markshawn/lesson";
 
 const app = getApp();
 const db = wx.cloud.database();
@@ -1121,6 +1122,9 @@ Page({
 	 * 触发：用户提交留言
 	 */
 	getContent: async function () {
+		const lid = this.data.kecheng._id
+		const hasPrivilege = await asyncCheckLessonPrivilege(lid)
+		if (!hasPrivilege) return wx.showModal({title: '留言失败', content: '原因：您没有权限'})
 		
 		// todo: 这个必须放在最开头，确实很奇怪
 		await wx.requestSubscribeMessage({tmplIds: ['kpg44pswUwCyF2aNaZXgljrznbSpJO9MeODqFfdMBDQ']})
@@ -1134,21 +1138,20 @@ Page({
 				is_delete: false,
 				is_handled: false,
 				mid: this.data.mid,
-				kecheng_id: this.data.kecheng._id,
+				kecheng_id: lid,
 			},
 		})
 		
 		this.setData({ask: false});
 		
 		const {mid} = this.data
-		const kid = this.data.kecheng._id
-		console.log({mid, kid})
-		this.loadAsks(kid)
+		console.log({mid, lid})
+		this.loadAsks(lid)
 		console.log("current asks:", this.data.asks1);
 		
 		const {data: teachers} = await db.collection("users").where({
 			identityType: "teacher",
-			ownedModules: {"$elemMatch": {kid}}
+			ownedModules: {"$elemMatch": {kid: lid}}
 		}).get();
 		
 		const result = await Promise.all(teachers.map(async ({_openid}) => await wx.cloud.callFunction({
